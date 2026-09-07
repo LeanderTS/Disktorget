@@ -12,7 +12,7 @@ export default async function Navbar() {
     <header className="border-b bg-white">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href="/" className="text-xl font-bold text-brand-dark">
-          Disktorget
+          Disktorget.no
         </Link>
 
         <nav className="flex items-center gap-4">
