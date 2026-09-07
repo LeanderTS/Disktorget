@@ -12,7 +12,7 @@ export default async function Navbar() {
     <header className="border-b bg-white">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href="/" className="text-xl font-bold text-brand-dark">
-          Disktorget.no
+          Disktorget
         </Link>
 
         <nav className="flex items-center gap-4">
@@ -26,7 +26,7 @@ export default async function Navbar() {
                 href="/sell"
                 className="rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-dark"
               >
-                Legg ut disk
+                Selg din disk
               </Link>
               <Link href="/mine" className="text-sm text-gray-700 hover:text-brand-dark">
                 Min side
