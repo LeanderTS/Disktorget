@@ -17,7 +17,7 @@ export default async function Navbar() {
 
         <nav className="flex items-center gap-4">
           <Link href="/" className="text-sm text-gray-700 hover:text-brand-dark">
-            Bla i disker
+            Søk disk
           </Link>
 
           {user ? (
