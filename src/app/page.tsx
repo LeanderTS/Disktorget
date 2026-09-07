@@ -43,7 +43,7 @@ export default async function HomePage({
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-2xl font-bold">Bla i disker</h1>
+        <h1 className="text-2xl font-bold">Søk Disker</h1>
         <p className="text-gray-600">
           Søk blant disker som andre diskgolfspillere har lagt ut til salg eller bytte.
         </p>
