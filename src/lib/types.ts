@@ -33,6 +33,8 @@ export interface Profile {
   full_name: string | null
   location: string | null
   contact_email: string | null
+  contact_phone: string | null
+  show_phone: boolean
   created_at: string
 }
 
