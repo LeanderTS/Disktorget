@@ -26,6 +26,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
     .single<Profile>()
 
   const canShowPhone = Boolean(seller?.show_phone && seller?.contact_phone)
+  const isCollection = listing.listing_kind === 'samling'
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
@@ -51,24 +52,65 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
       <div>
         <h1 className="text-2xl font-bold">{listing.title}</h1>
-        <p className="text-gray-600">
-          {listing.brand}
-          {listing.mold ? ` · ${listing.mold}` : ''}
-        </p>
+
+        {isCollection ? (
+          <p className="text-gray-600">Samling · {listing.items?.length ?? 0} disker</p>
+        ) : (
+          <p className="text-gray-600">
+            {listing.brand}
+            {listing.mold ? ` · ${listing.mold}` : ''}
+          </p>
+        )}
 
         <div className="mt-3 text-2xl font-semibold text-brand-dark">
           {listing.price_nok ? `${listing.price_nok} kr` : 'Pris på forespørsel'}
         </div>
 
-        <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-          <Detail label="Type" value={DISC_TYPE_LABELS[listing.disc_type]} />
-          <Detail label="Tilstand" value={CONDITION_LABELS[listing.condition]} />
-          <Detail label="Salg/bytte" value={LISTING_TYPE_LABELS[listing.listing_type]} />
-          {listing.plastic && <Detail label="Plast" value={listing.plastic} />}
-          {listing.color && <Detail label="Farge" value={listing.color} />}
-          {listing.weight_grams && <Detail label="Vekt" value={`${listing.weight_grams} g`} />}
-          {listing.location && <Detail label="Sted" value={listing.location} />}
-        </div>
+        {isCollection ? (
+          <div className="mt-4">
+            <h2 className="mb-2 font-medium">Disker i samlingen</h2>
+            <div className="overflow-hidden rounded-md border">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-50 text-left text-xs uppercase text-gray-500">
+                  <tr>
+                    <th className="px-3 py-2">Merke</th>
+                    <th className="px-3 py-2">Modell</th>
+                    <th className="px-3 py-2">Type</th>
+                    <th className="px-3 py-2">Tilstand</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {listing.items?.map((item, i) => (
+                    <tr key={i} className="border-t">
+                      <td className="px-3 py-2">{item.brand}</td>
+                      <td className="px-3 py-2">{item.mold ?? '–'}</td>
+                      <td className="px-3 py-2">{DISC_TYPE_LABELS[item.disc_type]}</td>
+                      <td className="px-3 py-2">{CONDITION_LABELS[item.condition]}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="mt-3 text-sm">
+              <Detail label="Salg/bytte" value={LISTING_TYPE_LABELS[listing.listing_type]} />
+              {listing.location && (
+                <div className="mt-2">
+                  <Detail label="Sted" value={listing.location} />
+                </div>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <Detail label="Type" value={DISC_TYPE_LABELS[listing.disc_type]} />
+            <Detail label="Tilstand" value={CONDITION_LABELS[listing.condition]} />
+            <Detail label="Salg/bytte" value={LISTING_TYPE_LABELS[listing.listing_type]} />
+            {listing.plastic && <Detail label="Plast" value={listing.plastic} />}
+            {listing.color && <Detail label="Farge" value={listing.color} />}
+            {listing.weight_grams && <Detail label="Vekt" value={`${listing.weight_grams} g`} />}
+            {listing.location && <Detail label="Sted" value={listing.location} />}
+          </div>
+        )}
 
         {listing.description && (
           <div className="mt-4">
@@ -89,7 +131,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
           <div className="mt-2 flex flex-wrap gap-2">
             {seller?.contact_email && (
-              <a
+              
                 href={`mailto:${seller.contact_email}?subject=${encodeURIComponent(
                   'Disktorget: ' + listing.title
                 )}`}
@@ -100,11 +142,11 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
             )}
 
             {canShowPhone && (
-              <a
+              
                 href={`tel:${seller!.contact_phone!.replace(/\s/g, '')}`}
                 className="inline-block rounded-md border border-brand px-3 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-light"
               >
-                SMS {seller!.contact_phone}
+                Ring {seller!.contact_phone}
               </a>
             )}
           </div>
