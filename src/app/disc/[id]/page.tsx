@@ -131,7 +131,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
           <div className="mt-2 flex flex-wrap gap-2">
             {seller?.contact_email && (
-              
+              <a
                 href={`mailto:${seller.contact_email}?subject=${encodeURIComponent(
                   'Disktorget: ' + listing.title
                 )}`}
@@ -142,7 +142,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
             )}
 
             {canShowPhone && (
-              
+              <a
                 href={`tel:${seller!.contact_phone!.replace(/\s/g, '')}`}
                 className="inline-block rounded-md border border-brand px-3 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-light"
               >
