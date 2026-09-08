@@ -77,7 +77,7 @@ export default function EditListingPage({ params }: { params: { id: string } }) 
       }
 
       setTitle(listing.title)
-      setBrand(listing.brand)
+      setBrand(listing.brand ?? '')
       setMold(listing.mold ?? '')
       setPlastic(listing.plastic ?? '')
       setColor(listing.color ?? '')
