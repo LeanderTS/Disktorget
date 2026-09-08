@@ -1,9 +1,10 @@
 import Link from 'next/link'
 import type { Listing } from '@/lib/types'
-import { CONDITION_LABELS, DISC_TYPE_LABELS, LISTING_TYPE_LABELS } from '@/lib/types'
+import { LISTING_TYPE_LABELS } from '@/lib/types'
 
 export default function DiscCard({ listing }: { listing: Listing }) {
   const image = listing.image_urls?.[0]
+  const isCollection = listing.listing_kind === 'samling'
 
   return (
     <Link
@@ -23,18 +24,24 @@ export default function DiscCard({ listing }: { listing: Listing }) {
 
       <div className="flex flex-1 flex-col gap-1 p-3">
         <h3 className="font-medium text-gray-900">{listing.title}</h3>
-        <p className="text-sm text-gray-500">
-          {listing.brand}
-          {listing.mold ? ` · ${listing.mold}` : ''}
-        </p>
+
+        {isCollection ? (
+          <p className="text-sm text-gray-500">
+            Samling · {listing.items?.length ?? 0} disker
+          </p>
+        ) : (
+          <p className="text-sm text-gray-500">
+            {listing.brand}
+            {listing.mold ? ` · ${listing.mold}` : ''}
+          </p>
+        )}
 
         <div className="mt-1 flex flex-wrap gap-1">
-          <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs text-brand-dark">
-            {DISC_TYPE_LABELS[listing.disc_type]}
-          </span>
-          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
-            {CONDITION_LABELS[listing.condition]}
-          </span>
+          {isCollection ? (
+            <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs text-brand-dark">
+              Samling
+            </span>
+          ) : null}
           <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
             {LISTING_TYPE_LABELS[listing.listing_type]}
           </span>
