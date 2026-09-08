@@ -46,7 +46,7 @@ export default async function HomePage({
       <Hero />
 
       <div className="mb-4">
-        <h2 className="text-xl font-semibold">Søk etter disk </h4>
+        <h2 className="text-xl font-semibold">Søk etter disk</h2>
       </div>
 
       <SearchFilters searchParams={searchParams} />
