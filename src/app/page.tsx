@@ -1,8 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import SearchFilters from '@/components/SearchFilters'
 import DiscCard from '@/components/DiscCard'
-import type { Listing } from '@/lib/types'
 import Hero from '@/components/Hero'
+import type { Listing } from '@/lib/types'
 
 export default async function HomePage({
   searchParams,
@@ -42,13 +42,12 @@ export default async function HomePage({
   const { data: listings, error } = await query.limit(60)
 
   return (
-    
-<div className="mb-6">
-  <h1 className="text-2xl font-bold">Bla i disker</h1>
-  <p className="text-gray-600">
-    Søk blant disker som andre diskgolfspillere har lagt ut til salg eller bytte.
-  </p>
-</div>
+    <div>
+      <Hero />
+
+      <div className="mb-4">
+        <h2 className="text-xl font-semibold">Bla i disker</h2>
+      </div>
 
       <SearchFilters searchParams={searchParams} />
 
