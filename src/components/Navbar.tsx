@@ -11,7 +11,7 @@ export default async function Navbar() {
   return (
     <header className="border-b bg-white">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-2"> <img src="/Disktorget Logo.png" alt="Disktorget" className="h-21 w-auto" /> </Link>
+        <Link href="/" className="flex items-center gap-2"> <img src="/Disktorget Logo.png" alt="Disktorget" className="h-24 w-auto" /> </Link>
 
         <nav className="flex items-center gap-4">
           <Link href="/" className="text-sm text-gray-700 hover:text-brand-dark">
