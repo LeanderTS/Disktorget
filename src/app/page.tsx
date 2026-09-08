@@ -42,13 +42,11 @@ export default async function HomePage({
   const { data: listings, error } = await query.limit(60)
 
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Søk Disker</h1>
-        <p className="text-gray-600">
-          Søk blant disker som andre diskgolfspillere har lagt ut til salg eller bytte.
-        </p>
-      </div>
+   <Hero />
+
+<div className="mb-4">
+  <h2 className="text-xl font-semibold">Bla i disker</h2>
+</div>
 
       <SearchFilters searchParams={searchParams} />
 
