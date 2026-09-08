@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import SearchFilters from '@/components/SearchFilters'
 import DiscCard from '@/components/DiscCard'
 import type { Listing } from '@/lib/types'
+import Hero from '@/components/Hero'
 
 export default async function HomePage({
   searchParams,
