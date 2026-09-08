@@ -100,12 +100,21 @@ export default async function MinSidePage() {
                   </p>
                 </div>
 
-                <form action={deleteListing}>
-                  <input type="hidden" name="id" value={listing.id} />
-                  <button type="submit" className="text-sm text-red-600 hover:underline">
-                    Slett
-                  </button>
-                </form>
+                <div className="flex items-center gap-3">
+                  <Link
+                    href={`/edit/${listing.id}`}
+                    className="text-sm text-brand-dark hover:underline"
+                  >
+                    Rediger
+                  </Link>
+
+                  <form action={deleteListing}>
+                    <input type="hidden" name="id" value={listing.id} />
+                    <button type="submit" className="text-sm text-red-600 hover:underline">
+                      Slett
+                    </button>
+                  </form>
+                </div>
               </div>
             ))}
           </div>
