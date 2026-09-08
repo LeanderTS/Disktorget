@@ -2,12 +2,20 @@ export type DiscType = 'putter' | 'midrange' | 'fairway_driver' | 'distance_driv
 export type DiscCondition = 'ny' | 'som_ny' | 'brukt' | 'slitt'
 export type ListingType = 'salg' | 'bytte' | 'salg_eller_bytte'
 export type ListingStatus = 'aktiv' | 'reservert' | 'solgt'
+export type ListingKind = 'enkelt' | 'samling'
+
+export interface CollectionItem {
+  brand: string
+  mold: string | null
+  disc_type: DiscType
+  condition: DiscCondition
+}
 
 export interface Listing {
   id: string
   user_id: string
   title: string
-  brand: string
+  brand: string | null
   mold: string | null
   plastic: string | null
   color: string | null
@@ -21,6 +29,8 @@ export interface Listing {
   price_nok: number | null
   listing_type: ListingType
   status: ListingStatus
+  listing_kind: ListingKind
+  items: CollectionItem[] | null
   description: string | null
   image_urls: string[]
   location: string | null
@@ -57,4 +67,10 @@ export const LISTING_TYPE_LABELS: Record<ListingType, string> = {
   salg: 'Til salgs',
   bytte: 'Byttes',
   salg_eller_bytte: 'Salg eller bytte',
+}
+
+export const STATUS_LABELS: Record<ListingStatus, string> = {
+  aktiv: 'Aktiv',
+  reservert: 'Reservert',
+  solgt: 'Solgt',
 }
