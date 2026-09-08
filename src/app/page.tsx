@@ -42,7 +42,7 @@ export default async function HomePage({
   const { data: listings, error } = await query.limit(60)
 
   return (
-   <Hero />
+<Hero />
 
 <div className="mb-4">
   <h2 className="text-xl font-semibold">Bla i disker</h2>
