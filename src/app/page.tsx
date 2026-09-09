@@ -33,8 +33,9 @@ export default async function HomePage({
     const c = searchParams.condition
     query = query.or(`condition.eq.${c},search_text.ilike.%${c}%`)
   }
-  if (searchParams.listing_type) {
-    query = query.eq('listing_type', searchParams.listing_type)
+  if (searchParams.location) {
+    const term = searchParams.location.replace(/[%_]/g, '')
+    query = query.ilike('location', `%${term}%`)
   }
   if (searchParams.max_price) {
     query = query.lte('price_nok', Number(searchParams.max_price))
