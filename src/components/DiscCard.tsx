@@ -36,6 +36,24 @@ export default function DiscCard({ listing }: { listing: Listing }) {
           </p>
         )}
 
+        {listing.location && (
+          <p className="flex items-center gap-1 text-xs text-gray-500">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+              className="h-3.5 w-3.5 flex-shrink-0"
+            >
+              <path
+                fillRule="evenodd"
+                d="M9.69 18.933a.375.375 0 00.62 0c.148-.221 4.19-6.256 4.19-10.183a4.5 4.5 0 10-9 0c0 3.927 4.042 9.962 4.19 10.183zM10 10.75a2.25 2.25 0 100-4.5 2.25 2.25 0 000 4.5z"
+                clipRule="evenodd"
+              />
+            </svg>
+            {listing.location}
+          </p>
+        )}
+
         <div className="mt-1 flex flex-wrap gap-1">
           {isCollection ? (
             <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs text-brand-dark">
