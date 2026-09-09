@@ -4,7 +4,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 
+const USERNAME_PATTERN = /^[a-zA-Z0-9_.-]{3,20}$/
+
 export default function SignupPage() {
+  const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -14,22 +17,51 @@ export default function SignupPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setLoading(true)
     setError(null)
 
-    const { error } = await supabase.auth.signUp({
+    const trimmedUsername = username.trim()
+
+    if (!USERNAME_PATTERN.test(trimmedUsername)) {
+      setError(
+        'Brukernavn må være 3-20 tegn, og kan bare inneholde bokstaver, tall, punktum, bindestrek og understrek.'
+      )
+      return
+    }
+
+    setLoading(true)
+
+    const { data: existing } = await supabase
+      .from('profiles')
+      .select('id')
+      .ilike('username', trimmedUsername)
+      .maybeSingle()
+
+    if (existing) {
+      setLoading(false)
+      setError('Dette brukernavnet er allerede i bruk. Prøv et annet.')
+      return
+    }
+
+    const { error: signUpError } = await supabase.auth.signUp({
       email,
       password,
       options: {
+        data: { username: trimmedUsername },
         emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
     })
 
     setLoading(false)
-    if (error) {
-      setError(error.message)
+
+    if (signUpError) {
+      if (signUpError.message.toLowerCase().includes('duplicate')) {
+        setError('Dette brukernavnet er allerede i bruk. Prøv et annet.')
+      } else {
+        setError(signUpError.message)
+      }
       return
     }
+
     setSuccess(true)
   }
 
@@ -49,6 +81,20 @@ export default function SignupPage() {
     <div className="mx-auto max-w-sm">
       <h1 className="mb-4 text-2xl font-bold">Registrer deg</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div>
+          <input
+            type="text"
+            placeholder="Brukernavn"
+            required
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="w-full rounded-md border px-3 py-2 text-sm"
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            Dette vises som selgernavn på annonsene dine.
+          </p>
+        </div>
+
         <input
           type="email"
           placeholder="E-post"
