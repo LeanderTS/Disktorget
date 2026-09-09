@@ -5,9 +5,9 @@ export default function Hero() {
         Kjøp, selg og bytt diskgolfutstyr
       </h1>
       <p className="mx-auto mt-3 max-w-2xl text-gray-700">
-        Disktorget er markedsplassen for diskgolfspillere i Norge. Søk blant disker
-        andre har lagt ut, legg ut dine egne på under et minutt, og bytt til deg nye
-        favoritter.
+        Disktorget er markedsplassen for diskgolfspillere i Norge. Søk blant disker og samlinger
+        andre har lagt ut, legg ut dine egne på under et minutt, og finn din
+        favoritt på sekunder.
       </p>
 
       <div className="mx-auto mt-6 grid max-w-3xl gap-4 text-left sm:grid-cols-3">
