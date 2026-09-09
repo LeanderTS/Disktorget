@@ -26,7 +26,7 @@ export default function Hero() {
         <div className="rounded-md bg-white p-4 shadow-sm">
           <div className="font-semibold text-brand-dark">3. Selg eller bytt</div>
           <p className="mt-1 text-sm text-gray-600">
-            Bli kontaktet direkte av andre spillere, og avtal salg eller bytte selv.
+            Bli kontaktet direkte av andre spillere, og avtal salg, kjøp eller bytte selv.
           </p>
         </div>
       </div>
