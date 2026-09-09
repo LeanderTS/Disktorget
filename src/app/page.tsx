@@ -18,19 +18,20 @@ export default async function HomePage({
     .order('created_at', { ascending: false })
 
   if (searchParams.q) {
-    const term = searchParams.q.replace(/[%_]/g, '')
-    query = query.or(
-      `title.ilike.%${term}%,brand.ilike.%${term}%,mold.ilike.%${term}%`
-    )
+    const term = searchParams.q.toLowerCase().replace(/[%_]/g, '')
+    query = query.ilike('search_text', `%${term}%`)
   }
   if (searchParams.brand) {
-    query = query.ilike('brand', `%${searchParams.brand}%`)
+    const term = searchParams.brand.toLowerCase().replace(/[%_]/g, '')
+    query = query.ilike('search_text', `%${term}%`)
   }
   if (searchParams.disc_type) {
-    query = query.eq('disc_type', searchParams.disc_type)
+    const t = searchParams.disc_type
+    query = query.or(`disc_type.eq.${t},search_text.ilike.%${t}%`)
   }
   if (searchParams.condition) {
-    query = query.eq('condition', searchParams.condition)
+    const c = searchParams.condition
+    query = query.or(`condition.eq.${c},search_text.ilike.%${c}%`)
   }
   if (searchParams.listing_type) {
     query = query.eq('listing_type', searchParams.listing_type)
