@@ -18,7 +18,7 @@ export default function Hero() {
           </p>
         </div>
         <div className="rounded-md bg-white p-4 shadow-sm">
-          <div className="font-semibold text-brand-dark">2. Legg ut</div>
+          <div className="font-semibold text-brand-dark">2. Registrer deg og legg ut</div>
           <p className="mt-1 text-sm text-gray-600">
             Registrer deg, legg inn info og bilder, og publiser annonsen din på minutter.
           </p>
