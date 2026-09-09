@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import UsernameForm from '@/components/UsernameForm'
 import type { Listing } from '@/lib/types'
 
 export default async function MinSidePage() {
@@ -56,6 +57,11 @@ export default async function MinSidePage() {
   return (
     <div>
       <h1 className="mb-4 text-2xl font-bold">Min side</h1>
+
+      <section className="mb-8 rounded-lg border bg-white p-4">
+        <h2 className="mb-2 font-medium">Brukernavn</h2>
+        <UsernameForm userId={user.id} currentUsername={profile?.username ?? null} />
+      </section>
 
       <section className="mb-8 rounded-lg border bg-white p-4">
         <h2 className="mb-2 font-medium">Kontaktinfo (vises på dine annonser)</h2>
