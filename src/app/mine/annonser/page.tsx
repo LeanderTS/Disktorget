@@ -13,6 +13,11 @@ export default async function AnnoncerPage() {
 
   if (!user) redirect('/login')
 
+  await supabase
+    .from('profiles')
+    .update({ annonser_last_viewed_at: new Date().toISOString() })
+    .eq('id', user.id)
+
   const { data: listings } = await supabase
     .from('listings')
     .select('*')
