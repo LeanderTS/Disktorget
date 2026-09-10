@@ -1,6 +1,5 @@
-import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
-import LogoutButton from './LogoutButton'
+import NavbarShell from './NavbarShell'
 
 export default async function Navbar() {
   const supabase = createClient()
@@ -8,44 +7,36 @@ export default async function Navbar() {
     data: { user },
   } = await supabase.auth.getUser()
 
-  return (
-    <header className="border-b bg-white">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-2"> <img src="/Disktorget Logo.png" alt="Disktorget" className="h-24 w-auto" /> </Link>
+  let unreadBidCount = 0
 
-        <nav className="flex items-center gap-4">
-          <Link href="/" className="text-sm text-gray-700 hover:text-brand-dark">
-            Søk disk
-          </Link>
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('annonser_last_viewed_at')
+      .eq('id', user.id)
+      .single()
 
-          {user ? (
-            <>
-              <Link
-                href="/sell"
-                className="rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-dark"
-              >
-                Selg din disk
-              </Link>
-              <Link href="/mine" className="text-sm text-gray-700 hover:text-brand-dark">
-                Min side
-              </Link>
-              <LogoutButton />
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="text-sm text-gray-700 hover:text-brand-dark">
-                Logg inn
-              </Link>
-              <Link
-                href="/signup"
-                className="rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-dark"
-              >
-                Registrer deg
-              </Link>
-            </>
-          )}
-        </nav>
-      </div>
-    </header>
-  )
+    const { data: listings } = await supabase
+      .from('listings')
+      .select('id')
+      .eq('user_id', user.id)
+
+    const listingIds = (listings ?? []).map((l) => l.id)
+
+    if (listingIds.length > 0) {
+      let query = supabase
+        .from('bids')
+        .select('id', { count: 'exact', head: true })
+        .in('listing_id', listingIds)
+
+      if (profile?.annonser_last_viewed_at) {
+        query = query.gt('created_at', profile.annonser_last_viewed_at)
+      }
+
+      const { count } = await query
+      unreadBidCount = count ?? 0
+    }
+  }
+
+  return <NavbarShell loggedIn={!!user} unreadBidCount={unreadBidCount} />
 }
