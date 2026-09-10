@@ -66,7 +66,7 @@ export default function EditCollectionForm({
   const [existingImages, setExistingImages] = useState<string[]>(listing.image_urls ?? [])
   const [removedImages, setRemovedImages] = useState<Set<string>>(new Set())
   const [newImages, setNewImages] = useState<FileList | null>(null)
-
+  const [allowBids, setAllowBids] = useState(listing.allow_bids)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -142,6 +142,7 @@ export default function EditCollectionForm({
           price_nok: price ? Number(price) : null,
           description: description || null,
           location: location || null,
+          allow_bids: allowBids,
           image_urls: [...keptImages, ...uploadedUrls],
         })
         .eq('id', listing.id)
@@ -326,7 +327,15 @@ export default function EditCollectionForm({
           <p className="mt-1 text-xs text-gray-500">Huk av et bilde for å fjerne det.</p>
         </div>
       )}
-
+      <label className="flex items-center gap-2 text-sm text-gray-700">
+        <input
+          type="checkbox"
+          checked={allowBids}
+          onChange={(e) => setAllowBids(e.target.checked)}
+          className="h-4 w-4"
+        />
+        Tillat bud på denne samlingen
+      </label>
       <div>
         <label className="mb-1 block text-sm font-medium">Legg til flere bilder</label>
         <input
