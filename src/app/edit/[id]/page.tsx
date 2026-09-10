@@ -3,22 +3,9 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import {
-  DISC_TYPE_LABELS,
-  CONDITION_LABELS,
-  LISTING_TYPE_LABELS,
-  type DiscType,
-  type DiscCondition,
-  type ListingType,
-  type ListingStatus,
-  type Listing,
-} from '@/lib/types'
-
-const STATUS_LABELS: Record<ListingStatus, string> = {
-  aktiv: 'Aktiv',
-  reservert: 'Reservert',
-  solgt: 'Solgt',
-}
+import EditSingleForm from '@/components/EditSingleForm'
+import EditCollectionForm from '@/components/EditCollectionForm'
+import type { Listing } from '@/lib/types'
 
 export default function EditListingPage({ params }: { params: { id: string } }) {
   const router = useRouter()
@@ -26,28 +13,8 @@ export default function EditListingPage({ params }: { params: { id: string } }) 
 
   const [loading, setLoading] = useState(true)
   const [userId, setUserId] = useState<string | null>(null)
+  const [listing, setListing] = useState<Listing | null>(null)
   const [loadError, setLoadError] = useState<string | null>(null)
-
-  const [title, setTitle] = useState('')
-  const [brand, setBrand] = useState('')
-  const [mold, setMold] = useState('')
-  const [plastic, setPlastic] = useState('')
-  const [color, setColor] = useState('')
-  const [discType, setDiscType] = useState<DiscType>('midrange')
-  const [condition, setCondition] = useState<DiscCondition>('brukt')
-  const [listingType, setListingType] = useState<ListingType>('salg')
-  const [status, setStatus] = useState<ListingStatus>('aktiv')
-  const [weight, setWeight] = useState('')
-  const [price, setPrice] = useState('')
-  const [description, setDescription] = useState('')
-  const [location, setLocation] = useState('')
-
-  const [existingImages, setExistingImages] = useState<string[]>([])
-  const [removedImages, setRemovedImages] = useState<Set<string>>(new Set())
-  const [newImages, setNewImages] = useState<FileList | null>(null)
-
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     async function load() {
@@ -58,325 +25,49 @@ export default function EditListingPage({ params }: { params: { id: string } }) 
       }
       setUserId(authData.user.id)
 
-      const { data: listing, error: fetchError } = await supabase
+      const { data, error: fetchError } = await supabase
         .from('listings')
         .select('*')
         .eq('id', params.id)
         .single<Listing>()
 
-      if (fetchError || !listing) {
+      if (fetchError || !data) {
         setLoadError('Fant ikke annonsen.')
         setLoading(false)
         return
       }
 
-      if (listing.user_id !== authData.user.id) {
+      if (data.user_id !== authData.user.id) {
         setLoadError('Du har ikke tilgang til å redigere denne annonsen.')
         setLoading(false)
         return
       }
 
-      setTitle(listing.title)
-      setBrand(listing.brand ?? '')
-      setMold(listing.mold ?? '')
-      setPlastic(listing.plastic ?? '')
-      setColor(listing.color ?? '')
-      setDiscType(listing.disc_type)
-      setCondition(listing.condition)
-      setListingType(listing.listing_type)
-      setStatus(listing.status)
-      setWeight(listing.weight_grams ? String(listing.weight_grams) : '')
-      setPrice(listing.price_nok ? String(listing.price_nok) : '')
-      setDescription(listing.description ?? '')
-      setLocation(listing.location ?? '')
-      setExistingImages(listing.image_urls ?? [])
+      setListing(data)
       setLoading(false)
     }
     load()
   }, [params.id, router, supabase])
 
-  function toggleRemoveImage(url: string) {
-    setRemovedImages((prev) => {
-      const next = new Set(prev)
-      if (next.has(url)) {
-        next.delete(url)
-      } else {
-        next.add(url)
-      }
-      return next
-    })
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!userId) return
-    setSubmitting(true)
-    setError(null)
-
-    try {
-      const keptImages = existingImages.filter((url) => !removedImages.has(url))
-      const uploadedUrls: string[] = []
-
-      if (newImages) {
-        for (const file of Array.from(newImages)) {
-          const path = `${userId}/${Date.now()}-${file.name}`
-          const { error: uploadError } = await supabase.storage
-            .from('disc-images')
-            .upload(path, file)
-          if (uploadError) throw uploadError
-
-          const { data: publicUrl } = supabase.storage
-            .from('disc-images')
-            .getPublicUrl(path)
-          uploadedUrls.push(publicUrl.publicUrl)
-        }
-      }
-
-      const { error: updateError } = await supabase
-        .from('listings')
-        .update({
-          title,
-          brand,
-          mold: mold || null,
-          plastic: plastic || null,
-          color: color || null,
-          disc_type: discType,
-          condition,
-          listing_type: listingType,
-          status,
-          weight_grams: weight ? Number(weight) : null,
-          price_nok: price ? Number(price) : null,
-          description: description || null,
-          location: location || null,
-          image_urls: [...keptImages, ...uploadedUrls],
-        })
-        .eq('id', params.id)
-
-      if (updateError) throw updateError
-
-      router.push('/mine')
-      router.refresh()
-    } catch (err: any) {
-      setError(err.message ?? 'Noe gikk galt. Prøv igjen.')
-    } finally {
-      setSubmitting(false)
-    }
-  }
-
   if (loading) {
     return <p className="text-gray-500">Laster annonse ...</p>
   }
 
-  if (loadError) {
-    return <p className="text-red-600">{loadError}</p>
+  if (loadError || !listing || !userId) {
+    return <p className="text-red-600">{loadError ?? 'Noe gikk galt.'}</p>
   }
 
   return (
     <div className="mx-auto max-w-xl">
-      <h1 className="mb-4 text-2xl font-bold">Rediger annonse</h1>
+      <h1 className="mb-4 text-2xl font-bold">
+        {listing.listing_kind === 'samling' ? 'Rediger samling' : 'Rediger annonse'}
+      </h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
-          <label className="mb-1 block text-sm font-medium">Tittel *</label>
-          <input
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-full rounded-md border px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Merke *</label>
-            <input
-              required
-              value={brand}
-              onChange={(e) => setBrand(e.target.value)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium">Modell</label>
-            <input
-              value={mold}
-              onChange={(e) => setMold(e.target.value)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Plasttype</label>
-            <input
-              value={plastic}
-              onChange={(e) => setPlastic(e.target.value)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium">Farge</label>
-            <input
-              value={color}
-              onChange={(e) => setColor(e.target.value)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Type disk *</label>
-            <select
-              value={discType}
-              onChange={(e) => setDiscType(e.target.value as DiscType)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            >
-              {Object.entries(DISC_TYPE_LABELS).map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium">Tilstand *</label>
-            <select
-              value={condition}
-              onChange={(e) => setCondition(e.target.value as DiscCondition)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            >
-              {Object.entries(CONDITION_LABELS).map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Vekt (gram)</label>
-            <input
-              type="number"
-              value={weight}
-              onChange={(e) => setWeight(e.target.value)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            />
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium">Pris (kr)</label>
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            />
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="mb-1 block text-sm font-medium">Salg eller bytte *</label>
-            <select
-              value={listingType}
-              onChange={(e) => setListingType(e.target.value as ListingType)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            >
-              {Object.entries(LISTING_TYPE_LABELS).map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
-            <label className="mb-1 block text-sm font-medium">Status *</label>
-            <select
-              value={status}
-              onChange={(e) => setStatus(e.target.value as ListingStatus)}
-              className="w-full rounded-md border px-3 py-2 text-sm"
-            >
-              {Object.entries(STATUS_LABELS).map(([value, label]) => (
-                <option key={value} value={value}>
-                  {label}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label className="mb-1 block text-sm font-medium">Sted</label>
-          <input
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="w-full rounded-md border px-3 py-2 text-sm"
-          />
-        </div>
-
-        <div>
-          <label className="mb-1 block text-sm font-medium">Beskrivelse</label>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            rows={4}
-            className="w-full rounded-md border px-3 py-2 text-sm"
-          />
-        </div>
-
-        {existingImages.length > 0 && (
-          <div>
-            <label className="mb-1 block text-sm font-medium">Eksisterende bilder</label>
-            <div className="grid grid-cols-3 gap-2">
-              {existingImages.map((url) => (
-                <label key={url} className="relative block cursor-pointer">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={url}
-                    alt=""
-                    className={`aspect-square w-full rounded-md object-cover ${
-                      removedImages.has(url) ? 'opacity-30' : ''
-                    }`}
-                  />
-                  <input
-                    type="checkbox"
-                    checked={removedImages.has(url)}
-                    onChange={() => toggleRemoveImage(url)}
-                    className="absolute right-1 top-1 h-4 w-4"
-                  />
-                </label>
-              ))}
-            </div>
-            <p className="mt-1 text-xs text-gray-500">
-              Huk av et bilde for å fjerne det.
-            </p>
-          </div>
-        )}
-
-        <div>
-          <label className="mb-1 block text-sm font-medium">Legg til flere bilder</label>
-          <input
-            type="file"
-            accept="image/*"
-            multiple
-            onChange={(e) => setNewImages(e.target.files)}
-            className="w-full text-sm"
-          />
-        </div>
-
-        {error && <p className="text-sm text-red-600">{error}</p>}
-
-        <button
-          type="submit"
-          disabled={submitting}
-          className="rounded-md bg-brand px-4 py-2 font-medium text-white hover:bg-brand-dark disabled:opacity-50"
-        >
-          {submitting ? 'Lagrer ...' : 'Lagre endringer'}
-        </button>
-      </form>
+      {listing.listing_kind === 'samling' ? (
+        <EditCollectionForm listing={listing} userId={userId} />
+      ) : (
+        <EditSingleForm listing={listing} userId={userId} />
+      )}
     </div>
   )
 }
