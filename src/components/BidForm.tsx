@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import type { Listing } from '@/lib/types'
 
 export default function BidForm({ listing }: { listing: Listing }) {
+  const router = useRouter()
   const supabase = createClient()
 
   const [userId, setUserId] = useState<string | null>(null)
@@ -59,6 +61,7 @@ export default function BidForm({ listing }: { listing: Listing }) {
 
     setAmount('')
     setSuccess(true)
+    router.refresh()
   }
 
   if (checkingAuth) return null
