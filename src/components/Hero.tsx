@@ -18,7 +18,7 @@ export default function Hero() {
           </p>
         </div>
         <div className="rounded-md bg-white p-4 shadow-sm">
-          <div className="font-semibold text-brand-dark">2. Registrer deg</div>
+          <div className="font-semibold text-brand-dark">2. Kjøp</div>
           <p className="mt-1 text-sm text-gray-600">
             Kjøp disken du mangler
           </p>
