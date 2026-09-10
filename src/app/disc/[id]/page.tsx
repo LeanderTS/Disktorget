@@ -148,7 +148,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
               <a href={`tel:${seller!.contact_phone!.replace(/\s/g, '')}`}
                 className="inline-block rounded-md border border-brand px-3 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-light"
               >
-                Ring {seller!.contact_phone}
+                SMS {seller!.contact_phone}
               </a>
             )}
           </div>
