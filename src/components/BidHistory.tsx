@@ -1,6 +1,3 @@
-cd /home/claude/disktorget/src/components
-
-cat > BidHistory.tsx << 'EOF'
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -80,48 +77,3 @@ export default function BidHistory({ bids }: { bids: BidRow[] }) {
                   <input
                     type="text"
                     inputMode="numeric"
-                    value={editValue}
-                    onChange={(e) => setEditValue(e.target.value.replace(/[^0-9]/g, ''))}
-                    className="w-20 rounded-md border px-2 py-1 text-sm"
-                  />
-                  <button
-                    onClick={() => saveEdit(bid.id)}
-                    disabled={busy}
-                    className="text-xs text-brand-dark hover:underline"
-                  >
-                    Lagre
-                  </button>
-                  <button onClick={cancelEdit} className="text-xs text-gray-500 hover:underline">
-                    Avbryt
-                  </button>
-                </span>
-              ) : (
-                <span className="flex items-center gap-2">
-                  <span className="font-semibold">{bid.amount_nok} kr</span>
-                  {isOwn && (
-                    <>
-                      <button
-                        onClick={() => startEdit(bid)}
-                        className="text-xs text-brand-dark hover:underline"
-                      >
-                        Rediger
-                      </button>
-                      <button
-                        onClick={() => deleteBid(bid.id)}
-                        disabled={busy}
-                        className="text-xs text-red-600 hover:underline"
-                      >
-                        Slett
-                      </button>
-                    </>
-                  )}
-                </span>
-              )}
-            </li>
-          )
-        })}
-      </ul>
-    </div>
-  )
-}
-
