@@ -27,7 +27,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
   const canShowPhone = Boolean(seller?.show_phone && seller?.contact_phone)
   const isCollection = listing.listing_kind === 'samling'
-
+<a
   return (
     <div className="grid gap-6 md:grid-cols-2">
       <div>
