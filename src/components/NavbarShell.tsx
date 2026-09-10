@@ -60,11 +60,11 @@ export default function NavbarShell({
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-4 py-10">
           <Link href="/">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.png" alt="Disktorget" className="h-24 w-auto md:h-28" />
+            <img src="/Disktorget Logo.png" alt="Disktorget" className="h-24 w-auto md:h-28" />
           </Link>
           <nav className="flex flex-wrap items-center justify-center gap-4">
             <Link href="/" className="text-sm text-gray-700 hover:text-brand-dark">
-              Bla i disker
+              Søk etter disker
             </Link>
             {authLinks}
           </nav>
@@ -83,7 +83,7 @@ export default function NavbarShell({
 
         <nav className="flex items-center gap-4">
           <Link href="/" className="text-sm text-gray-700 hover:text-brand-dark">
-            Bla i disker
+            Søk etter disker
           </Link>
           {authLinks}
         </nav>
