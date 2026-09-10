@@ -180,7 +180,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
         {listing.allow_bids && <BidForm listing={listing} />}
 
-        <BidHistory
+               <BidHistory
           bids={bids.map((b) => ({
             id: b.id,
             bidder_id: b.bidder_id,
@@ -189,6 +189,10 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
             bidderName: biddersMap[b.bidder_id] ?? 'Ukjent bruker',
           }))}
         />
+      </div>
+    </div>
+  )
+}
 
 function Detail({ label, value }: { label: string; value: string }) {
   return (
