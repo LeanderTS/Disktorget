@@ -124,5 +124,4 @@ export default function BidHistory({ bids }: { bids: BidRow[] }) {
     </div>
   )
 }
-EOF
-echo "BidHistory.tsx opprettet"
+
