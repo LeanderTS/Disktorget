@@ -26,6 +26,28 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
     .eq('id', listing.user_id)
     .single<Profile>()
 
+  const { data: bidRows } = await supabase
+    .from('bids')
+    .select('*')
+    .eq('listing_id', listing.id)
+    .order('created_at', { ascending: false })
+
+  const bids = bidRows ?? []
+
+  const bidderIds = Array.from(new Set(bids.map((b) => b.bidder_id)))
+  let biddersMap: Record<string, string> = {}
+
+  if (bidderIds.length > 0) {
+    const { data: bidderProfiles } = await supabase
+      .from('profiles')
+      .select('id, username')
+      .in('id', bidderIds)
+
+    biddersMap = Object.fromEntries(
+      (bidderProfiles ?? []).map((p) => [p.id, p.username ?? 'Ukjent bruker'])
+    )
+  }
+
   const canShowPhone = Boolean(seller?.show_phone && seller?.contact_phone)
   const isCollection = listing.listing_kind === 'samling'
 
@@ -149,13 +171,30 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
               <a href={`tel:${seller!.contact_phone!.replace(/\s/g, '')}`}
                 className="inline-block rounded-md border border-brand px-3 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-light"
               >
-                SMS {seller!.contact_phone}
+                Ring {seller!.contact_phone}
               </a>
             )}
-           </div>
+          </div>
         </div>
 
         <BidForm listing={listing} />
+
+        {bids.length > 0 && (
+          <div className="mt-4 rounded-lg border bg-white p-4">
+            <h2 className="mb-2 font-medium">Budhistorikk</h2>
+            <ul className="flex flex-col gap-1">
+              {bids.map((bid) => (
+                <li key={bid.id} className="flex justify-between text-sm text-gray-700">
+                  <span>
+                    {biddersMap[bid.bidder_id] ?? 'Ukjent bruker'}
+                    {bid.item_index !== null && ` · Disk ${bid.item_index + 1}`}
+                  </span>
+                  <span className="font-semibold">{bid.amount_nok} kr</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   )
