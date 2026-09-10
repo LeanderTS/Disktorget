@@ -14,19 +14,19 @@ export default function Hero() {
         <div className="rounded-md bg-white p-4 shadow-sm">
           <div className="font-semibold text-brand-dark">1. Søk</div>
           <p className="mt-1 text-sm text-gray-600">
-            Filtrer på merke, type og tilstand for å finne akkurat disken du leter etter.
+            Søk etter din favoritt disk
           </p>
         </div>
         <div className="rounded-md bg-white p-4 shadow-sm">
-          <div className="font-semibold text-brand-dark">2. Registrer deg og legg ut</div>
+          <div className="font-semibold text-brand-dark">2. Registrer deg</div>
           <p className="mt-1 text-sm text-gray-600">
-            Registrer deg, legg inn info og bilder, og publiser annonsen din på minutter.
+            Registrer deg og gjør et godt kjøp 
           </p>
         </div>
         <div className="rounded-md bg-white p-4 shadow-sm">
-          <div className="font-semibold text-brand-dark">3. Selg eller bytt</div>
+          <div className="font-semibold text-brand-dark">3. Selg</div>
           <p className="mt-1 text-sm text-gray-600">
-            Bli kontaktet direkte av andre spillere, og avtal salg, kjøp eller bytte selv.
+            Selg - Gi diskene dine et nytt liv på minutter
           </p>
         </div>
       </div>
