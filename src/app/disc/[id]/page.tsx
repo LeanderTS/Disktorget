@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import BidForm from '@/components/BidForm'
 import {
   DISC_TYPE_LABELS,
   CONDITION_LABELS,
@@ -151,8 +152,10 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
                 SMS {seller!.contact_phone}
               </a>
             )}
-          </div>
+           </div>
         </div>
+
+        <BidForm listing={listing} />
       </div>
     </div>
   )
