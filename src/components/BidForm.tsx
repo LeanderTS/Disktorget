@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { notifyBid } from '@/app/actions/notifyBid'
 import type { Listing } from '@/lib/types'
 
 export default function BidForm({ listing }: { listing: Listing }) {
