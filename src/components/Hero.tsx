@@ -20,13 +20,13 @@ export default function Hero() {
         <div className="rounded-md bg-white p-4 shadow-sm">
           <div className="font-semibold text-brand-dark">2. Registrer deg</div>
           <p className="mt-1 text-sm text-gray-600">
-            Registrer deg og gjør et godt kjøp 
+            Kjøp disken du mangler
           </p>
         </div>
         <div className="rounded-md bg-white p-4 shadow-sm">
           <div className="font-semibold text-brand-dark">3. Selg</div>
           <p className="mt-1 text-sm text-gray-600">
-            Gi diskene dine et nytt liv på minutter
+            Gi dine gamle disker et nytt liv på minutter
           </p>
         </div>
       </div>
