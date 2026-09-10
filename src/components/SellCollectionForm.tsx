@@ -42,6 +42,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
   const [images, setImages] = useState<FileList | null>(null)
+  const [allowBids, setAllowBids] = useState(false)
 
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -104,6 +105,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         price_nok: price ? Number(price) : null,
         description: description || null,
         location: location || null,
+        allow_bids: allowBids,
         image_urls: imageUrls,
       })
 
@@ -249,7 +251,15 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
           className="w-full rounded-md border px-3 py-2 text-sm"
         />
       </div>
-
+      <label className="flex items-center gap-2 text-sm text-gray-700">
+        <input
+          type="checkbox"
+          checked={allowBids}
+          onChange={(e) => setAllowBids(e.target.checked)}
+          className="h-4 w-4"
+        />
+        Tillat bud på denne samlingen
+      </label>
       <div>
         <label className="mb-1 block text-sm font-medium">Bilder av samlingen</label>
         <input
