@@ -20,7 +20,7 @@ export default function NavbarShell({
         href="/sell"
         className="rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-dark"
       >
-        Legg ut disk
+        Selg disk
       </Link>
 
       <Link
