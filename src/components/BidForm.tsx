@@ -60,6 +60,8 @@ export default function BidForm({ listing }: { listing: Listing }) {
       return
     }
 
+    notifyBid(listing.id, numericAmount, isCollection ? Number(itemIndex) : null)
+    
     setAmount('')
     setSuccess(true)
     router.refresh()
