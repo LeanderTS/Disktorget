@@ -2,7 +2,7 @@ export default function Hero() {
   return (
     <section className="mb-8 rounded-lg bg-brand-light px-6 py-8 text-center md:py-10">
       <h1 className="text-2xl font-bold text-brand-dark md:text-3xl">
-        Kjøp, selg og bytt diskgolfutstyr
+        Søk - Kjøp - Selg
       </h1>
       <p className="mx-auto mt-3 max-w-2xl text-gray-700">
         Disktorget er markedsplassen for diskgolfspillere i Norge. Søk blant disker og samlinger
