@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import BidForm from '@/components/BidForm'
+import BidHistory from '@/components/BidHistory'
 import {
   DISC_TYPE_LABELS,
   CONDITION_LABELS,
@@ -177,28 +178,17 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
           </div>
         </div>
 
-        <BidForm listing={listing} />
+        {listing.allow_bids && <BidForm listing={listing} />}
 
-        {bids.length > 0 && (
-          <div className="mt-4 rounded-lg border bg-white p-4">
-            <h2 className="mb-2 font-medium">Budhistorikk</h2>
-            <ul className="flex flex-col gap-1">
-              {bids.map((bid) => (
-                <li key={bid.id} className="flex justify-between text-sm text-gray-700">
-                  <span>
-                    {biddersMap[bid.bidder_id] ?? 'Ukjent bruker'}
-                    {bid.item_index !== null && ` · Disk ${bid.item_index + 1}`}
-                  </span>
-                  <span className="font-semibold">{bid.amount_nok} kr</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
+        <BidHistory
+          bids={bids.map((b) => ({
+            id: b.id,
+            bidder_id: b.bidder_id,
+            item_index: b.item_index,
+            amount_nok: b.amount_nok,
+            bidderName: biddersMap[b.bidder_id] ?? 'Ukjent bruker',
+          }))}
+        />
 
 function Detail({ label, value }: { label: string; value: string }) {
   return (
