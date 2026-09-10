@@ -73,6 +73,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
               <table className="w-full text-sm">
                 <thead className="bg-gray-50 text-left text-xs uppercase text-gray-500">
                   <tr>
+                    <th className="px-3 py-2">#</th>
                     <th className="px-3 py-2">Merke</th>
                     <th className="px-3 py-2">Modell</th>
                     <th className="px-3 py-2">Type</th>
@@ -82,6 +83,9 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
                 <tbody>
                   {listing.items?.map((item, i) => (
                     <tr key={i} className="border-t">
+                      <td className="whitespace-nowrap px-3 py-2 text-gray-500">
+                        Disk {i + 1}
+                      </td>
                       <td className="px-3 py-2">{item.brand}</td>
                       <td className="px-3 py-2">{item.mold ?? '–'}</td>
                       <td className="px-3 py-2">{DISC_TYPE_LABELS[item.disc_type]}</td>
@@ -131,7 +135,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
           <div className="mt-2 flex flex-wrap gap-2">
             {seller?.contact_email && (
-              <a
+              
                 href={`mailto:${seller.contact_email}?subject=${encodeURIComponent(
                   'Disktorget: ' + listing.title
                 )}`}
@@ -142,7 +146,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
             )}
 
             {canShowPhone && (
-              <a
+              
                 href={`tel:${seller!.contact_phone!.replace(/\s/g, '')}`}
                 className="inline-block rounded-md border border-brand px-3 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-light"
               >
