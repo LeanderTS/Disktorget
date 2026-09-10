@@ -3,7 +3,7 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 
 export const metadata: Metadata = {
-  title: 'Disktorget – kjøp, selg og bytt diskgolfutstyr',
+  title: 'Disktorget – Søk - Kjøp - Selg',
   description:
     'Disktorget er markedsplassen for diskgolfspillere i Norge. Kjøp, selg og bytt disker og annet diskgolfutstyr.',
 }
