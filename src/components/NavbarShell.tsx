@@ -78,7 +78,7 @@ export default function NavbarShell({
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
         <Link href="/" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="Disktorget" className="h-14 w-auto" />
+          <img src="/Disktorget Logo.png" alt="Disktorget" className="h-14 w-auto" />
         </Link>
 
         <nav className="flex items-center gap-4">
