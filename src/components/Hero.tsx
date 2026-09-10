@@ -26,7 +26,7 @@ export default function Hero() {
         <div className="rounded-md bg-white p-4 shadow-sm">
           <div className="font-semibold text-brand-dark">3. Selg</div>
           <p className="mt-1 text-sm text-gray-600">
-            Selg - Gi diskene dine et nytt liv på minutter
+            Gi diskene dine et nytt liv på minutter
           </p>
         </div>
       </div>
