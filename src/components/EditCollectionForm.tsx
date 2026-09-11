@@ -22,6 +22,7 @@ interface Row {
   mold: string
   discType: DiscType
   condition: DiscCondition
+  diskRate: string
 }
 
 function emptyRow(): Row {
@@ -31,6 +32,7 @@ function emptyRow(): Row {
     mold: '',
     discType: 'midrange',
     condition: 'brukt',
+    diskRate: '',
   }
 }
 
@@ -42,6 +44,7 @@ function rowsFromItems(items: CollectionItem[] | null): Row[] {
     mold: item.mold ?? '',
     discType: item.disc_type,
     condition: item.condition,
+    diskRate: item.disk_rate ?? '',
   }))
 }
 
@@ -66,7 +69,7 @@ export default function EditCollectionForm({
   const [existingImages, setExistingImages] = useState<string[]>(listing.image_urls ?? [])
   const [removedImages, setRemovedImages] = useState<Set<string>>(new Set())
   const [newImages, setNewImages] = useState<FileList | null>(null)
-  const [allowBids, setAllowBids] = useState(listing.allow_bids)
+
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -130,6 +133,7 @@ export default function EditCollectionForm({
         mold: row.mold || null,
         disc_type: row.discType,
         condition: row.condition,
+        disk_rate: row.diskRate || null,
       }))
 
       const { error: updateError } = await supabase
@@ -142,7 +146,6 @@ export default function EditCollectionForm({
           price_nok: price ? Number(price) : null,
           description: description || null,
           location: location || null,
-          allow_bids: allowBids,
           image_urls: [...keptImages, ...uploadedUrls],
         })
         .eq('id', listing.id)
@@ -227,6 +230,12 @@ export default function EditCollectionForm({
                     </option>
                   ))}
                 </select>
+                <input
+                  value={row.diskRate}
+                  onChange={(e) => updateRow(row.key, { diskRate: e.target.value })}
+                  placeholder="Disk Rate (f.eks. 8/10)"
+                  className="col-span-2 rounded-md border px-3 py-2 text-sm"
+                />
               </div>
             </div>
           ))}
@@ -327,15 +336,7 @@ export default function EditCollectionForm({
           <p className="mt-1 text-xs text-gray-500">Huk av et bilde for å fjerne det.</p>
         </div>
       )}
-      <label className="flex items-center gap-2 text-sm text-gray-700">
-        <input
-          type="checkbox"
-          checked={allowBids}
-          onChange={(e) => setAllowBids(e.target.checked)}
-          className="h-4 w-4"
-        />
-        Tillat bud på denne samlingen
-      </label>
+
       <div>
         <label className="mb-1 block text-sm font-medium">Legg til flere bilder</label>
         <input
