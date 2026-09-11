@@ -102,6 +102,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
                     <th className="px-3 py-2">Modell</th>
                     <th className="px-3 py-2">Type</th>
                     <th className="px-3 py-2">Tilstand</th>
+                    <th className="px-3 py-2">Disk Rate</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -114,6 +115,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
                       <td className="px-3 py-2">{item.mold ?? '–'}</td>
                       <td className="px-3 py-2">{DISC_TYPE_LABELS[item.disc_type]}</td>
                       <td className="px-3 py-2">{CONDITION_LABELS[item.condition]}</td>
+                      <td className="px-3 py-2">{item.disk_rate ?? '–'}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -132,6 +134,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
           <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
             <Detail label="Type" value={DISC_TYPE_LABELS[listing.disc_type]} />
             <Detail label="Tilstand" value={CONDITION_LABELS[listing.condition]} />
+            {listing.disk_rate && <Detail label="Disk Rate" value={listing.disk_rate} />}
             <Detail label="Salg/bytte" value={LISTING_TYPE_LABELS[listing.listing_type]} />
             {listing.plastic && <Detail label="Plast" value={listing.plastic} />}
             {listing.color && <Detail label="Farge" value={listing.color} />}
@@ -180,7 +183,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
         {listing.allow_bids && <BidForm listing={listing} />}
 
-               <BidHistory
+        <BidHistory
           bids={bids.map((b) => ({
             id: b.id,
             bidder_id: b.bidder_id,
