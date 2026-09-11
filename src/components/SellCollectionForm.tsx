@@ -19,6 +19,7 @@ interface Row {
   mold: string
   discType: DiscType
   condition: DiscCondition
+  diskRate: string
 }
 
 function emptyRow(): Row {
@@ -28,6 +29,7 @@ function emptyRow(): Row {
     mold: '',
     discType: 'midrange',
     condition: 'brukt',
+    diskRate: '',
   }
 }
 
@@ -42,7 +44,6 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
   const [images, setImages] = useState<FileList | null>(null)
-  const [allowBids, setAllowBids] = useState(false)
 
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -93,6 +94,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         mold: row.mold || null,
         disc_type: row.discType,
         condition: row.condition,
+        disk_rate: row.diskRate || null,
       }))
 
       const { error: insertError } = await supabase.from('listings').insert({
@@ -105,7 +107,6 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         price_nok: price ? Number(price) : null,
         description: description || null,
         location: location || null,
-        allow_bids: allowBids,
         image_urls: imageUrls,
       })
 
@@ -190,6 +191,12 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
                     </option>
                   ))}
                 </select>
+                <input
+                  value={row.diskRate}
+                  onChange={(e) => updateRow(row.key, { diskRate: e.target.value })}
+                  placeholder="Disk Rate (f.eks. 8/10)"
+                  className="col-span-2 rounded-md border px-3 py-2 text-sm"
+                />
               </div>
             </div>
           ))}
@@ -251,15 +258,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
           className="w-full rounded-md border px-3 py-2 text-sm"
         />
       </div>
-      <label className="flex items-center gap-2 text-sm text-gray-700">
-        <input
-          type="checkbox"
-          checked={allowBids}
-          onChange={(e) => setAllowBids(e.target.checked)}
-          className="h-4 w-4"
-        />
-        Tillat bud på denne samlingen
-      </label>
+
       <div>
         <label className="mb-1 block text-sm font-medium">Bilder av samlingen</label>
         <input
