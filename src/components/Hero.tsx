@@ -79,7 +79,6 @@ export default function Hero() {
         <div className="mx-auto max-w-5xl text-center">
           <h2 className="text-2xl font-bold text-gray-900 md:text-3xl">Slik fungerer det</h2>
           <p className="mt-2 text-gray-500">
-            Enkelt, trygt og raskt - for diskgolfspillere, av diskgolfspillere.
           </p>
 
           <div className="mt-8 grid gap-4 text-left md:grid-cols-3">
@@ -87,13 +86,13 @@ export default function Hero() {
               color="bg-emerald-100 text-emerald-700"
               icon={<SearchIcon />}
               title="1. Søk"
-              description="Søk etter din favorittdisk blant tusenvis av annonser."
+              description="Søk etter din favorittdisk."
             />
             <StepCard
               color="bg-sky-100 text-sky-700"
               icon={<TagIcon />}
               title="2. Kjøp"
-              description="Finn disker du mangler, og kjøp direkte fra andre diskgolfspillere."
+              description="Finn disker du mangler, og kjøp direkte fra andre."
             />
             <StepCard
               color="bg-lime-100 text-lime-700"
