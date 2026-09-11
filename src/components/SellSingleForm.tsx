@@ -28,9 +28,8 @@ export default function SellSingleForm({ userId }: { userId: string }) {
   const [price, setPrice] = useState('')
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
-  const [images, setImages] = useState<FileList | null>(null)
   const [diskRate, setDiskRate] = useState('')
-  const [allowBids, setAllowBids] = useState(false)
+  const [images, setImages] = useState<FileList | null>(null)
 
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -73,7 +72,6 @@ export default function SellSingleForm({ userId }: { userId: string }) {
         price_nok: price ? Number(price) : null,
         description: description || null,
         location: location || null,
-        allow_bids: allowBids,
         image_urls: imageUrls,
       })
 
@@ -100,17 +98,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
           className="w-full rounded-md border px-3 py-2 text-sm"
         />
       </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium">
-          Disk Rate <span className="font-normal text-gray-400">(valgfritt)</span>
-        </label>
-        <input
-          value={diskRate}
-          onChange={(e) => setDiskRate(e.target.value)}
-          placeholder="F.eks. 8/10"
-          className="w-full rounded-md border px-3 py-2 text-sm"
-        />
-      </div>
+
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="mb-1 block text-sm font-medium">Merke *</label>
@@ -169,15 +157,6 @@ export default function SellSingleForm({ userId }: { userId: string }) {
             ))}
           </select>
         </div>
-      <label className="flex items-center gap-2 text-sm text-gray-700">
-        <input
-          type="checkbox"
-          checked={allowBids}
-          onChange={(e) => setAllowBids(e.target.checked)}
-          className="h-4 w-4"
-        />
-        Tillat bud på denne annonsen
-      </label>
         <div>
           <label className="mb-1 block text-sm font-medium">Tilstand *</label>
           <select
@@ -192,6 +171,18 @@ export default function SellSingleForm({ userId }: { userId: string }) {
             ))}
           </select>
         </div>
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium">
+          Disk Rate <span className="font-normal text-gray-400">(valgfritt)</span>
+        </label>
+        <input
+          value={diskRate}
+          onChange={(e) => setDiskRate(e.target.value)}
+          placeholder="F.eks. 8/10"
+          className="w-full rounded-md border px-3 py-2 text-sm"
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
