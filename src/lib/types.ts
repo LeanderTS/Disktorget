@@ -9,6 +9,7 @@ export interface CollectionItem {
   mold: string | null
   disc_type: DiscType
   condition: DiscCondition
+  disk_rate: string | null
 }
 
 export interface Listing {
@@ -21,6 +22,7 @@ export interface Listing {
   color: string | null
   disc_type: DiscType
   condition: DiscCondition
+  disk_rate: string | null
   speed: number | null
   glide: number | null
   turn: number | null
