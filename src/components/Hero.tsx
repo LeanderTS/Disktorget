@@ -7,7 +7,7 @@ export default function Hero() {
         {/* Bakgrunnsbilde: legg en fil ved navn "hero-bg.png" i public-mappen */}
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+          style={{ backgroundImage: "url('/hero-bg.png')" }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/40 to-transparent" />
 
