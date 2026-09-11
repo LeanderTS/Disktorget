@@ -37,5 +37,4 @@ export default function FeaturedDiscCard({ listing }: { listing: Listing }) {
     </Link>
   )
 }
-EOF
-echo "FeaturedDiscCard.tsx opprettet"
+
