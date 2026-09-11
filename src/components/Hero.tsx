@@ -4,15 +4,15 @@ export default function Hero() {
   return (
     <>
       <section className="relative overflow-hidden rounded-b-3xl text-white">
-        {/* Valgfritt bakgrunnsbilde: legg en fil ved navn "hero-bg.jpg" i public-mappen */}
+        {/* Bakgrunnsbilde: legg en fil ved navn "hero-bg.png" i public-mappen */}
         <div
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/hero-bg.png')" }}
+          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-emerald-900/80 to-slate-800/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/80 via-slate-900/40 to-transparent" />
 
-        <div className="relative mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2 md:items-center md:py-24">
-          <div>
+        <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
+          <div className="max-w-xl">
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-300">
               Søk <span className="mx-1">•</span> Kjøp <span className="mx-1">•</span> Selg
             </p>
@@ -28,13 +28,13 @@ export default function Hero() {
               og samlinger andre har lagt ut, eller legg ut dine egne på under et minutt.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              <a
-                href="sok"
+              <Link
+                href="/sok"
                 className="flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-dark"
               >
                 <SearchIcon /> Søk etter disker
                 <span aria-hidden>→</span>
-              </a>
+              </Link>
               <Link
                 href="/sell"
                 className="flex items-center gap-2 rounded-full border border-white/70 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10"
@@ -42,35 +42,6 @@ export default function Hero() {
                 <PlusIcon /> Selg disk
               </Link>
             </div>
-          </div>
-
-          <div className="relative hidden h-64 md:block">
-            <svg
-              viewBox="0 0 400 240"
-              xmlns="http://www.w3.org/2000/svg"
-              className="absolute inset-0 h-full w-full"
-            >
-              <path
-                d="M20 190 Q140 170 220 175"
-                stroke="#8BC34A"
-                strokeWidth="6"
-                fill="none"
-                strokeLinecap="round"
-                opacity="0.5"
-              />
-              <path
-                d="M10 210 Q150 200 230 200"
-                stroke="#8BC34A"
-                strokeWidth="6"
-                fill="none"
-                strokeLinecap="round"
-                opacity="0.3"
-              />
-              <g transform="rotate(-10 260 150)">
-                <ellipse cx="260" cy="150" rx="110" ry="55" fill="#22c55e" />
-                <ellipse cx="260" cy="140" rx="70" ry="30" fill="#15803d" opacity="0.5" />
-              </g>
-            </svg>
           </div>
         </div>
       </section>
@@ -83,18 +54,21 @@ export default function Hero() {
 
           <div className="mt-8 grid gap-4 text-left md:grid-cols-3">
             <StepCard
+              href="/sok"
               color="bg-emerald-100 text-emerald-700"
               icon={<SearchIcon />}
               title="1. Søk"
-              description="Søk etter din favorittdisk."
+              description="Søk etter din favorittdisk blant tusenvis av annonser."
             />
             <StepCard
+              href="/sok"
               color="bg-sky-100 text-sky-700"
               icon={<TagIcon />}
               title="2. Kjøp"
-              description="Finn disker du mangler, og kjøp direkte fra andre."
+              description="Finn disker du mangler, og kjøp direkte fra andre diskgolfspillere."
             />
             <StepCard
+              href="/sell"
               color="bg-lime-100 text-lime-700"
               icon={<SendIcon />}
               title="3. Selg"
@@ -108,18 +82,23 @@ export default function Hero() {
 }
 
 function StepCard({
+  href,
   color,
   icon,
   title,
   description,
 }: {
+  href: string
   color: string
   icon: React.ReactNode
   title: string
   description: string
 }) {
   return (
-    <div className="flex items-start gap-4 rounded-xl border bg-white p-4 shadow-sm">
+    <Link
+      href={href}
+      className="flex items-start gap-4 rounded-xl border bg-white p-4 shadow-sm transition hover:border-brand hover:shadow-md"
+    >
       <div className={`flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full ${color}`}>
         {icon}
       </div>
@@ -130,7 +109,7 @@ function StepCard({
       <span aria-hidden className="mt-2 text-gray-300">
         →
       </span>
-    </div>
+    </Link>
   )
 }
 
