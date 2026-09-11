@@ -29,7 +29,7 @@ export default function Hero() {
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <a
-                href="#sok"
+                href="sok"
                 className="flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-dark"
               >
                 <SearchIcon /> Søk etter disker
