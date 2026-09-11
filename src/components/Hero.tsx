@@ -28,7 +28,7 @@ export default function Hero() {
               og samlinger andre har lagt ut, eller legg ut dine egne på under et minutt.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
-              
+              <a
                 href="#sok"
                 className="flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white hover:bg-brand-dark"
               >
