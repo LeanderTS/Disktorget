@@ -67,6 +67,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
         color: color || null,
         disc_type: discType,
         condition,
+        disk_rate: diskRate || null,
         listing_type: listingType,
         weight_grams: weight ? Number(weight) : null,
         price_nok: price ? Number(price) : null,
@@ -99,7 +100,17 @@ export default function SellSingleForm({ userId }: { userId: string }) {
           className="w-full rounded-md border px-3 py-2 text-sm"
         />
       </div>
-
+      <div>
+        <label className="mb-1 block text-sm font-medium">
+          Disk Rate <span className="font-normal text-gray-400">(valgfritt)</span>
+        </label>
+        <input
+          value={diskRate}
+          onChange={(e) => setDiskRate(e.target.value)}
+          placeholder="F.eks. 8/10"
+          className="w-full rounded-md border px-3 py-2 text-sm"
+        />
+      </div>
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="mb-1 block text-sm font-medium">Merke *</label>
