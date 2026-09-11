@@ -1,6 +1,3 @@
-'use client'
-
-cat > FeaturedDiscCard.tsx << 'EOF'
 import Link from 'next/link'
 import type { Listing } from '@/lib/types'
 
