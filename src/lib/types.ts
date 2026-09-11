@@ -32,6 +32,7 @@ export interface Listing {
   listing_type: ListingType
   status: ListingStatus
   listing_kind: ListingKind
+  allow_bids: boolean
   items: CollectionItem[] | null
   description: string | null
   image_urls: string[]
