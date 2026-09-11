@@ -17,7 +17,7 @@ export default function NavbarShell({
         </Link>
 
         <nav className="flex flex-1 items-center justify-center gap-6">
-          <Link href="/" className="text-sm font-medium text-gray-700 hover:text-brand-dark">
+            <Link href="/sok" className="text-sm font-medium text-gray-700 hover:text-brand-dark">
             Søk etter disker
           </Link>
 
