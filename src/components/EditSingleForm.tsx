@@ -37,7 +37,7 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
   const [removedImages, setRemovedImages] = useState<Set<string>>(new Set())
   const [diskRate, setDiskRate] = useState(listing.disk_rate ?? '')
   const [newImages, setNewImages] = useState<FileList | null>(null)
-  const [allowBids, setAllowBids] = useState(listing.allow_bids)
+
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -94,7 +94,6 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
           price_nok: price ? Number(price) : null,
           description: description || null,
           location: location || null,
-          allow_bids: allowBids,
           image_urls: [...keptImages, ...uploadedUrls],
         })
         .eq('id', listing.id)
@@ -121,17 +120,7 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
           className="w-full rounded-md border px-3 py-2 text-sm"
         />
       </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium">
-          Disk Rate <span className="font-normal text-gray-400">(valgfritt)</span>
-        </label>
-        <input
-          value={diskRate}
-          onChange={(e) => setDiskRate(e.target.value)}
-          placeholder="F.eks. 8/10"
-          className="w-full rounded-md border px-3 py-2 text-sm"
-        />
-      </div>
+
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="mb-1 block text-sm font-medium">Merke *</label>
@@ -200,6 +189,18 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
             ))}
           </select>
         </div>
+      </div>
+
+      <div>
+        <label className="mb-1 block text-sm font-medium">
+          Disk Rate <span className="font-normal text-gray-400">(valgfritt)</span>
+        </label>
+        <input
+          value={diskRate}
+          onChange={(e) => setDiskRate(e.target.value)}
+          placeholder="F.eks. 8/10"
+          className="w-full rounded-md border px-3 py-2 text-sm"
+        />
       </div>
 
       <div className="grid grid-cols-2 gap-3">
@@ -299,15 +300,7 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
           <p className="mt-1 text-xs text-gray-500">Huk av et bilde for å fjerne det.</p>
         </div>
       )}
-      <label className="flex items-center gap-2 text-sm text-gray-700">
-        <input
-          type="checkbox"
-          checked={allowBids}
-          onChange={(e) => setAllowBids(e.target.checked)}
-          className="h-4 w-4"
-        />
-        Tillat bud på denne annonsen
-      </label>
+
       <div>
         <label className="mb-1 block text-sm font-medium">Legg til flere bilder</label>
         <input
