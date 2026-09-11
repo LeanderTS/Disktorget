@@ -14,10 +14,10 @@ export default function Hero() {
         <div className="relative mx-auto grid max-w-6xl gap-10 px-6 py-16 md:grid-cols-2 md:items-center md:py-24">
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-widest text-emerald-300">
-              Kjøp <span className="mx-1">•</span> Selg <span className="mx-1">•</span> Diskgolf
+              Søk <span className="mx-1">•</span> Kjøp <span className="mx-1">•</span> Selg
             </p>
             <h1 className="text-4xl font-extrabold leading-tight md:text-5xl">
-              Discer som får
+              Disker som får
               <br />
               <span className="bg-gradient-to-r from-emerald-400 to-lime-300 bg-clip-text text-transparent">
                 nye eventyr
