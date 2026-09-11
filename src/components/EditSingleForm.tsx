@@ -36,6 +36,7 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
   const [existingImages, setExistingImages] = useState<string[]>(listing.image_urls ?? [])
   const [removedImages, setRemovedImages] = useState<Set<string>>(new Set())
   const [diskRate, setDiskRate] = useState(listing.disk_rate ?? '')
+  const [allowBids, setAllowBids] = useState(listing.allow_bids)
   const [newImages, setNewImages] = useState<FileList | null>(null)
 
   const [submitting, setSubmitting] = useState(false)
@@ -89,6 +90,7 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
           condition,
           disk_rate: diskRate || null,
           listing_type: listingType,
+          allow_bids: allowBids,
           status,
           weight_grams: weight ? Number(weight) : null,
           price_nok: price ? Number(price) : null,
@@ -300,6 +302,16 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
           <p className="mt-1 text-xs text-gray-500">Huk av et bilde for å fjerne det.</p>
         </div>
       )}
+
+      <label className="flex items-center gap-2 text-sm text-gray-700">
+        <input
+          type="checkbox"
+          checked={allowBids}
+          onChange={(e) => setAllowBids(e.target.checked)}
+          className="h-4 w-4"
+        />
+        Tillat at andre kan legge inn bud på denne annonsen
+      </label>
 
       <div>
         <label className="mb-1 block text-sm font-medium">Legg til flere bilder</label>

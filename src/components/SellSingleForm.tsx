@@ -29,6 +29,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
   const [diskRate, setDiskRate] = useState('')
+  const [allowBids, setAllowBids] = useState(false)
   const [images, setImages] = useState<FileList | null>(null)
 
   const [submitting, setSubmitting] = useState(false)
@@ -68,6 +69,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
         condition,
         disk_rate: diskRate || null,
         listing_type: listingType,
+        allow_bids: allowBids,
         weight_grams: weight ? Number(weight) : null,
         price_nok: price ? Number(price) : null,
         description: description || null,
@@ -242,6 +244,16 @@ export default function SellSingleForm({ userId }: { userId: string }) {
           className="w-full rounded-md border px-3 py-2 text-sm"
         />
       </div>
+
+      <label className="flex items-center gap-2 text-sm text-gray-700">
+        <input
+          type="checkbox"
+          checked={allowBids}
+          onChange={(e) => setAllowBids(e.target.checked)}
+          className="h-4 w-4"
+        />
+        Tillat at andre kan legge inn bud på denne annonsen
+      </label>
 
       <div>
         <label className="mb-1 block text-sm font-medium">Bilder</label>
