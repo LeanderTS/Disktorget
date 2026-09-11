@@ -1,5 +1,3 @@
-cd /home/claude/disktorget/src/components
-
 cat > FeaturedDiscCard.tsx << 'EOF'
 import Link from 'next/link'
 import type { Listing } from '@/lib/types'
