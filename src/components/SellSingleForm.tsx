@@ -29,6 +29,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
   const [images, setImages] = useState<FileList | null>(null)
+  const [diskRate, setDiskRate] = useState('')
   const [allowBids, setAllowBids] = useState(false)
 
   const [submitting, setSubmitting] = useState(false)
