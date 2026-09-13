@@ -12,6 +12,7 @@ import {
   type DiscCondition,
   type ListingType,
   type ListingStatus,
+  DISC_BRANDS,
   type CollectionItem,
   type Listing,
 } from '@/lib/types'
@@ -194,12 +195,18 @@ export default function EditCollectionForm({
               </div>
 
               <div className="grid grid-cols-2 gap-2">
-                <input
+                <select
                   value={row.brand}
                   onChange={(e) => updateRow(row.key, { brand: e.target.value })}
-                  placeholder="Merke *"
                   className="rounded-md border px-3 py-2 text-sm"
-                />
+                >
+                  <option value="">Velg merke</option>
+                  {DISC_BRANDS.map((b) => (
+                    <option key={b} value={b}>
+                      {b}
+                    </option>
+                  ))}
+                </select>
                 <input
                   value={row.mold}
                   onChange={(e) => updateRow(row.key, { mold: e.target.value })}
