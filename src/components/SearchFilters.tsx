@@ -1,4 +1,4 @@
-import { DISC_TYPE_LABELS, CONDITION_LABELS } from '@/lib/types'
+import { DISC_TYPE_LABELS, CONDITION_LABELS, DISC_BRANDS } from '@/lib/types'
 
 // Ren HTML <form method="get"> - trenger ikke JavaScript.
 export default function SearchFilters({
@@ -19,13 +19,18 @@ export default function SearchFilters({
         className="col-span-2 rounded-md border px-3 py-2 text-sm lg:col-span-2"
       />
 
-      <input
-        type="text"
+      <select
         name="brand"
-        placeholder="Merke"
         defaultValue={searchParams.brand ?? ''}
         className="rounded-md border px-3 py-2 text-sm"
-      />
+      >
+        <option value="">Alle merker</option>
+        {DISC_BRANDS.map((brand) => (
+          <option key={brand} value={brand}>
+            {brand}
+          </option>
+        ))}
+      </select>
 
       <select
         name="disc_type"
