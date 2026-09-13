@@ -74,37 +74,6 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
           </div>
         )}
 
-        <div className="mt-6 rounded-lg border bg-white p-4">
-          <h2 className="mb-1 font-medium">Selger</h2>
-          <p className="text-gray-700">{seller?.username ?? 'Ukjent bruker'}</p>
-
-          {!seller?.contact_email && !canShowPhone && (
-            <p className="mt-2 text-sm text-gray-500">
-              Selger har ikke lagt til kontaktinfo ennå.
-            </p>
-          )}
-
-          <div className="mt-2 flex flex-wrap gap-2">
-            {seller?.contact_email && (
-              <a href={`mailto:${seller.contact_email}?subject=${encodeURIComponent(
-                  'Disktorget: ' + listing.title
-                )}`}
-                className="inline-block rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-dark"
-              >
-                Kontakt selger på e-post
-              </a>
-            )}
-
-            {canShowPhone && (
-              <a href={`tel:${seller!.contact_phone!.replace(/\s/g, '')}`}
-                className="inline-block rounded-md border border-brand px-3 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-light"
-              >
-                Ring {seller!.contact_phone}
-              </a>
-            )}
-          </div>
-        </div>
-
         {listing.allow_bids ? (
           <BidForm listing={listing} />
         ) : (
@@ -198,6 +167,36 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
           </div>
         )}
 
+        <div className="mt-6 rounded-lg border bg-white p-4">
+          <h2 className="mb-1 font-medium">Selger</h2>
+          <p className="text-gray-700">{seller?.username ?? 'Ukjent bruker'}</p>
+
+          {!seller?.contact_email && !canShowPhone && (
+            <p className="mt-2 text-sm text-gray-500">
+              Selger har ikke lagt til kontaktinfo ennå.
+            </p>
+          )}
+
+          <div className="mt-2 flex flex-wrap gap-2">
+            {seller?.contact_email && (
+              <a href={`mailto:${seller.contact_email}?subject=${encodeURIComponent(
+                  'Disktorget: ' + listing.title
+                )}`}
+                className="inline-block rounded-md bg-brand px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-dark"
+              >
+                Kontakt selger på e-post
+              </a>
+            )}
+
+            {canShowPhone && (
+              <a href={`tel:${seller!.contact_phone!.replace(/\s/g, '')}`}
+                className="inline-block rounded-md border border-brand px-3 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-light"
+              >
+                Ring {seller!.contact_phone}
+              </a>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   )
