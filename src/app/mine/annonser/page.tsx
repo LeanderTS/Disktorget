@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { revalidatePath } from 'next/cache'
 import { createClient } from '@/lib/supabase/server'
+import { notifyBidAccepted } from '@/app/actions/notifyBidAccepted'
 import type { Listing } from '@/lib/types'
 
 export default async function AnnoncerPage() {
@@ -84,6 +85,10 @@ export default async function AnnoncerPage() {
       })
       .eq('id', listingId)
       .eq('user_id', user.id)
+
+    if (bidId) {
+      await notifyBidAccepted(bidId)
+    }
 
     revalidatePath('/mine/annonser')
   }
