@@ -54,7 +54,7 @@ export default function BuyButton({ listing }: { listing: Listing }) {
 
   return (
     <div className="mt-4 rounded-lg border bg-white p-4">
-      <h2 className="mb-2 font-medium">Kjøp denne disken</h2>
+      <h2 className="mb-2 font-medium">Er dette din nye favoritt?</h2>
 
       {!userId ? (
         <p className="text-sm text-gray-500">
@@ -89,7 +89,7 @@ export default function BuyButton({ listing }: { listing: Listing }) {
             disabled={sending}
             className="rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-dark disabled:opacity-50"
           >
-            {sending ? 'Sender ...' : 'Jeg ønsker å kjøpe denne disken'}
+            {sending ? 'Sender ...' : 'Kjøp'}
           </button>
         </div>
       )}
