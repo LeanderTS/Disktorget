@@ -10,37 +10,14 @@ export default async function SokPage({
 }) {
   const supabase = createClient()
 
-  let query = supabase
-    .from('listings')
-    .select('*')
-    .eq('status', 'aktiv')
-    .order('created_at', { ascending: false })
-
-  if (searchParams.q) {
-    const term = searchParams.q.toLowerCase().replace(/[%_]/g, '')
-    query = query.ilike('search_text', `%${term}%`)
-  }
-  if (searchParams.brand) {
-    const term = searchParams.brand.toLowerCase().replace(/[%_]/g, '')
-    query = query.ilike('search_text', `%${term}%`)
-  }
-  if (searchParams.disc_type) {
-    const t = searchParams.disc_type
-    query = query.or(`disc_type.eq.${t},search_text.ilike.%${t}%`)
-  }
-  if (searchParams.condition) {
-    const c = searchParams.condition
-    query = query.or(`condition.eq.${c},search_text.ilike.%${c}%`)
-  }
-  if (searchParams.location) {
-    const term = searchParams.location.replace(/[%_]/g, '')
-    query = query.ilike('location', `%${term}%`)
-  }
-  if (searchParams.max_price) {
-    query = query.lte('price_nok', Number(searchParams.max_price))
-  }
-
-  const { data: listings, error } = await query.limit(60)
+  const { data: listings, error } = await supabase.rpc('search_listings', {
+    search_term: searchParams.q ?? null,
+    filter_brand: searchParams.brand ?? null,
+    filter_disc_type: searchParams.disc_type ?? null,
+    filter_condition: searchParams.condition ?? null,
+    filter_location: searchParams.location ?? null,
+    filter_max_price: searchParams.max_price ? Number(searchParams.max_price) : null,
+  })
 
   return (
     <div>
