@@ -12,6 +12,7 @@ import {
   type DiscCondition,
   type ListingType,
   type ListingStatus,
+  DISC_BRANDS,
   type Listing,
 } from '@/lib/types'
 
@@ -126,12 +127,19 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="mb-1 block text-sm font-medium">Merke *</label>
-          <input
+          <select
             required
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
             className="w-full rounded-md border px-3 py-2 text-sm"
-          />
+          >
+            <option value="">Velg merke</option>
+            {DISC_BRANDS.map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium">Modell</label>
