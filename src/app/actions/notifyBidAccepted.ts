@@ -17,11 +17,28 @@ export async function notifyBidAccepted(bidId: string) {
 
   const { data: listing } = await supabase
     .from('listings')
-    .select('title')
+    .select('title, user_id')
     .eq('id', bid.listing_id)
     .single()
 
   const title = listing?.title ?? 'annonsen'
+
+  let contactLine = ''
+  if (listing?.user_id) {
+    const { data: seller } = await supabase
+      .from('profiles')
+      .select('contact_email, contact_phone')
+      .eq('id', listing.user_id)
+      .single()
+
+    const parts: string[] = []
+    if (seller?.contact_email) parts.push(seller.contact_email)
+    if (seller?.contact_phone) parts.push(seller.contact_phone)
+
+    if (parts.length > 0) {
+      contactLine = `\n\nKontakt selger her: ${parts.join(' / ')}`
+    }
+  }
 
   try {
     await fetch('https://api.resend.com/emails', {
@@ -34,7 +51,7 @@ export async function notifyBidAccepted(bidId: string) {
         from: 'Disktorget <bud@disktorget.no>',
         to: bid.bidder_email,
         subject: `Ditt bud ble akseptert på "${title}"`,
-        text: `Gode nyheter! Selgeren har akseptert budet ditt på ${bid.amount_nok} kr for "${title}".\n\nSe annonsen: https://disktorget.no/disc/${bid.listing_id}`,
+        text: `Gode nyheter! Selgeren har akseptert budet ditt på ${bid.amount_nok} kr for "${title}".${contactLine}\n\nSe annonsen: https://disktorget.no/disc/${bid.listing_id}`,
       }),
     })
   } catch {
