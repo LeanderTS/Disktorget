@@ -58,14 +58,14 @@ export default function Hero() {
               color="bg-emerald-100 text-emerald-700"
               icon={<SearchIcon />}
               title="1. Søk"
-              description="Søk etter din favorittdisk blant tusenvis av annonser."
+              description="Søk etter din favorittdisk."
             />
             <StepCard
               href="/sok"
               color="bg-sky-100 text-sky-700"
               icon={<TagIcon />}
               title="2. Kjøp"
-              description="Finn disker du mangler, og kjøp direkte fra andre diskgolfspillere."
+              description="Finn disker du mangler, by eller kjøp direkte fra andre diskgolfspillere."
             />
             <StepCard
               href="/sell"
