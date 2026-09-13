@@ -58,7 +58,7 @@ export default function Hero() {
               color="bg-emerald-100 text-emerald-700"
               icon={<SearchIcon />}
               title="1. Søk"
-              description="Søk etter din favorittdisk."
+              description="Registrer deg og søk etter din favorittdisk."
             />
             <StepCard
               href="/sok"
