@@ -7,6 +7,7 @@ import {
   DISC_TYPE_LABELS,
   CONDITION_LABELS,
   LISTING_TYPE_LABELS,
+  DISC_BRANDS,
   type DiscType,
   type DiscCondition,
   type ListingType,
@@ -104,13 +105,19 @@ export default function SellSingleForm({ userId }: { userId: string }) {
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="mb-1 block text-sm font-medium">Merke *</label>
-          <input
+          <select
             required
             value={brand}
             onChange={(e) => setBrand(e.target.value)}
-            placeholder="Innova, Discraft, Latitude 64 ..."
             className="w-full rounded-md border px-3 py-2 text-sm"
-          />
+          >
+            <option value="">Velg merke</option>
+            {DISC_BRANDS.map((b) => (
+              <option key={b} value={b}>
+                {b}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="mb-1 block text-sm font-medium">Modell</label>
@@ -171,110 +178,3 @@ export default function SellSingleForm({ userId }: { userId: string }) {
                 {label}
               </option>
             ))}
-          </select>
-        </div>
-      </div>
-
-      <div>
-        <label className="mb-1 block text-sm font-medium">
-          Disk Rate <span className="font-normal text-gray-400">(valgfritt)</span>
-        </label>
-        <input
-          value={diskRate}
-          onChange={(e) => setDiskRate(e.target.value)}
-          placeholder="F.eks. 8/10"
-          className="w-full rounded-md border px-3 py-2 text-sm"
-        />
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="mb-1 block text-sm font-medium">Vekt (gram)</label>
-          <input
-            type="number"
-            value={weight}
-            onChange={(e) => setWeight(e.target.value)}
-            className="w-full rounded-md border px-3 py-2 text-sm"
-          />
-        </div>
-        <div>
-          <label className="mb-1 block text-sm font-medium">Pris (kr)</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="La stå tom for 'pris på forespørsel'"
-            className="w-full rounded-md border px-3 py-2 text-sm"
-          />
-        </div>
-      </div>
-
-      <div>
-        <label className="mb-1 block text-sm font-medium">Salg eller bytte *</label>
-        <select
-          value={listingType}
-          onChange={(e) => setListingType(e.target.value as ListingType)}
-          className="w-full rounded-md border px-3 py-2 text-sm"
-        >
-          {Object.entries(LISTING_TYPE_LABELS).map(([value, label]) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div>
-        <label className="mb-1 block text-sm font-medium">Sted</label>
-        <input
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="F.eks. Ålesund"
-          className="w-full rounded-md border px-3 py-2 text-sm"
-        />
-      </div>
-
-      <div>
-        <label className="mb-1 block text-sm font-medium">Beskrivelse</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          rows={4}
-          placeholder="Slitasje, kastfølelse, antall kast, e.l."
-          className="w-full rounded-md border px-3 py-2 text-sm"
-        />
-      </div>
-
-      <label className="flex items-center gap-2 text-sm text-gray-700">
-        <input
-          type="checkbox"
-          checked={allowBids}
-          onChange={(e) => setAllowBids(e.target.checked)}
-          className="h-4 w-4"
-        />
-        Tillat bud
-      </label>
-
-      <div>
-        <label className="mb-1 block text-sm font-medium">Bilder</label>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={(e) => setImages(e.target.files)}
-          className="w-full text-sm"
-        />
-      </div>
-
-      {error && <p className="text-sm text-red-600">{error}</p>}
-
-      <button
-        type="submit"
-        disabled={submitting}
-        className="rounded-md bg-brand px-4 py-2 font-medium text-white hover:bg-brand-dark disabled:opacity-50"
-      >
-        {submitting ? 'Publiserer ...' : 'Publiser annonse'}
-      </button>
-    </form>
-  )
-}
