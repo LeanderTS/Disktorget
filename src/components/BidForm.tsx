@@ -12,6 +12,7 @@ export default function BidForm({ listing }: { listing: Listing }) {
   const supabase = createClient()
 
   const [userId, setUserId] = useState<string | null>(null)
+  const [userEmail, setUserEmail] = useState<string | null>(null)
   const [checkingAuth, setCheckingAuth] = useState(true)
   const [itemIndex, setItemIndex] = useState('0')
   const [amount, setAmount] = useState('')
@@ -24,6 +25,7 @@ export default function BidForm({ listing }: { listing: Listing }) {
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUserId(data.user?.id ?? null)
+      setUserEmail(data.user?.email ?? null)
       setCheckingAuth(false)
     })
   }, [supabase])
@@ -49,6 +51,7 @@ export default function BidForm({ listing }: { listing: Listing }) {
     const { error: insertError } = await supabase.from('bids').insert({
       listing_id: listing.id,
       bidder_id: userId,
+      bidder_email: userEmail,
       item_index: isCollection ? Number(itemIndex) : null,
       amount_nok: numericAmount,
     })
@@ -61,7 +64,7 @@ export default function BidForm({ listing }: { listing: Listing }) {
     }
 
     notifyBid(listing.id, numericAmount, isCollection ? Number(itemIndex) : null)
-    
+
     setAmount('')
     setSuccess(true)
     router.refresh()
