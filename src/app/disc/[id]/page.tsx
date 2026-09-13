@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import BidForm from '@/components/BidForm'
+import BuyButton from '@/components/BuyButton'
 import BidHistory from '@/components/BidHistory'
 import {
   DISC_TYPE_LABELS,
@@ -181,7 +182,11 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
           </div>
         </div>
 
-        {listing.allow_bids && <BidForm listing={listing} />}
+        {listing.allow_bids ? (
+          <BidForm listing={listing} />
+        ) : (
+          <BuyButton listing={listing} />
+        )}
 
         <BidHistory
           bids={bids.map((b) => ({
