@@ -65,6 +65,48 @@ export default async function AnnoncerPage() {
     revalidatePath('/mine/annonser')
   }
 
+  async function markSold(formData: FormData) {
+    'use server'
+    const supabase = createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (!user) return
+
+    const listingId = formData.get('listingId') as string
+    const bidId = formData.get('bidId') as string
+
+    await supabase
+      .from('listings')
+      .update({
+        status: 'solgt',
+        winning_bid_id: bidId || null,
+      })
+      .eq('id', listingId)
+      .eq('user_id', user.id)
+
+    revalidatePath('/mine/annonser')
+  }
+
+  async function reopenListing(formData: FormData) {
+    'use server'
+    const supabase = createClient()
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (!user) return
+
+    const listingId = formData.get('listingId') as string
+
+    await supabase
+      .from('listings')
+      .update({ status: 'aktiv', winning_bid_id: null })
+      .eq('id', listingId)
+      .eq('user_id', user.id)
+
+    revalidatePath('/mine/annonser')
+  }
+
   return (
     <div>
       <Link href="/mine" className="mb-4 inline-block text-sm text-brand-dark hover:underline">
@@ -99,6 +141,26 @@ export default async function AnnoncerPage() {
                   </div>
 
                   <div className="flex items-center gap-3">
+                    {listing.status === 'aktiv' ? (
+                      <form action={markSold}>
+                        <input type="hidden" name="listingId" value={listing.id} />
+                        <input type="hidden" name="bidId" value="" />
+                        <button
+                          type="submit"
+                          className="text-sm font-medium text-brand-dark hover:underline"
+                        >
+                          Merk som solgt
+                        </button>
+                      </form>
+                    ) : (
+                      <form action={reopenListing}>
+                        <input type="hidden" name="listingId" value={listing.id} />
+                        <button type="submit" className="text-sm text-gray-500 hover:underline">
+                          Åpne igjen
+                        </button>
+                      </form>
+                    )}
+
                     <Link
                       href={`/edit/${listing.id}`}
                       className="text-sm text-brand-dark hover:underline"
@@ -122,10 +184,25 @@ export default async function AnnoncerPage() {
                     </p>
                     <ul className="flex flex-col gap-1">
                       {listingBids.map((bid) => (
-                        <li key={bid.id} className="text-sm text-gray-700">
-                          {biddersMap[bid.bidder_id] ?? 'Ukjent bruker'} bød{' '}
-                          <span className="font-semibold">{bid.amount_nok} kr</span>
-                          {bid.item_index !== null && ` på Disk ${bid.item_index + 1}`}
+                        <li key={bid.id} className="flex items-center justify-between text-sm text-gray-700">
+                          <span>
+                            {biddersMap[bid.bidder_id] ?? 'Ukjent bruker'} bød{' '}
+                            <span className="font-semibold">{bid.amount_nok} kr</span>
+                            {bid.item_index !== null && ` på Disk ${bid.item_index + 1}`}
+                          </span>
+
+                          {listing.status === 'aktiv' && (
+                            <form action={markSold}>
+                              <input type="hidden" name="listingId" value={listing.id} />
+                              <input type="hidden" name="bidId" value={bid.id} />
+                              <button
+                                type="submit"
+                                className="text-xs font-medium text-brand-dark hover:underline"
+                              >
+                                Aksepter dette budet
+                              </button>
+                            </form>
+                          )}
                         </li>
                       ))}
                     </ul>
