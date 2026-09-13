@@ -54,7 +54,7 @@ export default function BuyButton({ listing }: { listing: Listing }) {
 
   return (
     <div className="mt-4 rounded-lg border bg-white p-4">
-      <h2 className="mb-2 font-medium">Er dette din nye favoritt?</h2>
+      <h2 className="mb-2 font-medium">Ved "kjøp" får selger beskjed</h2>
 
       {!userId ? (
         <p className="text-sm text-gray-500">
