@@ -252,7 +252,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
           onChange={(e) => setAllowBids(e.target.checked)}
           className="h-4 w-4"
         />
-        Tillat at andre kan legge inn bud på denne annonsen
+        Tillat bud
       </label>
 
       <div>
