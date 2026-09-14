@@ -28,22 +28,28 @@ export default async function SokPage({
         </p>
       </div>
 
-      <SearchFilters searchParams={searchParams} />
+      <div className="grid gap-6 md:grid-cols-[240px_1fr]">
+        <aside>
+          <SearchFilters searchParams={searchParams} />
+        </aside>
 
-      {error && (
-        <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">
-          Klarte ikke å hente annonser: {error.message}
-        </p>
-      )}
+        <div>
+          {error && (
+            <p className="rounded-md bg-red-50 p-3 text-sm text-red-700">
+              Klarte ikke å hente annonser: {error.message}
+            </p>
+          )}
 
-      {!error && listings && listings.length === 0 && (
-        <p className="text-gray-500">Ingen disker matcher søket ditt ennå.</p>
-      )}
+          {!error && listings && listings.length === 0 && (
+            <p className="text-gray-500">Ingen disker matcher søket ditt ennå.</p>
+          )}
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-        {(listings as Listing[] | null)?.map((listing) => (
-          <DiscCard key={listing.id} listing={listing} />
-        ))}
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+            {(listings as Listing[] | null)?.map((listing) => (
+              <DiscCard key={listing.id} listing={listing} />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   )
