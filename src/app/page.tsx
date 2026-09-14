@@ -27,11 +27,22 @@ export default async function HomePage() {
         </div>
 
         {listings && listings.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-            {(listings as Listing[]).map((listing) => (
-              <FeaturedDiscCard key={listing.id} listing={listing} />
-            ))}
-          </div>
+          <>
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+              {(listings as Listing[]).map((listing) => (
+                <FeaturedDiscCard key={listing.id} listing={listing} />
+              ))}
+            </div>
+
+            <div className="mt-8 flex justify-center">
+              <Link
+                href="/sok"
+                className="rounded-full bg-brand px-6 py-3 text-sm font-semibold text-white hover:bg-brand-dark"
+              >
+                Se mer
+              </Link>
+            </div>
+          </>
         ) : (
           <p className="text-gray-500">Ingen annonser lagt ut ennå.</p>
         )}
