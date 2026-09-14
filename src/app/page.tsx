@@ -22,7 +22,7 @@ export default async function HomePage() {
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-xl font-bold text-gray-900">Nyeste annonser</h2>
           <Link href="/sok" className="text-sm text-brand-dark hover:underline">
-            Se alle →
+            Se alle annonser →
           </Link>
         </div>
 
