@@ -1,6 +1,7 @@
 import { DISC_TYPE_LABELS, CONDITION_LABELS, DISC_BRANDS } from '@/lib/types'
 
 // Ren HTML <form method="get"> - trenger ikke JavaScript.
+// Vises som en vertikal filter-kolonne (sidebar).
 export default function SearchFilters({
   searchParams,
 }: {
@@ -9,20 +10,20 @@ export default function SearchFilters({
   return (
     <form
       method="get"
-      className="mb-6 grid grid-cols-2 gap-3 rounded-lg border bg-white p-4 md:grid-cols-4 lg:grid-cols-6"
+      className="flex flex-col gap-3 rounded-lg border bg-white p-4"
     >
       <input
         type="text"
         name="q"
         placeholder="Søk (merke, modell, tittel)"
         defaultValue={searchParams.q ?? ''}
-        className="col-span-2 rounded-md border px-3 py-2 text-sm lg:col-span-2"
+        className="w-full rounded-md border px-3 py-2 text-sm"
       />
 
       <select
         name="brand"
         defaultValue={searchParams.brand ?? ''}
-        className="rounded-md border px-3 py-2 text-sm"
+        className="w-full rounded-md border px-3 py-2 text-sm"
       >
         <option value="">Alle merker</option>
         {DISC_BRANDS.map((brand) => (
@@ -35,7 +36,7 @@ export default function SearchFilters({
       <select
         name="disc_type"
         defaultValue={searchParams.disc_type ?? ''}
-        className="rounded-md border px-3 py-2 text-sm"
+        className="w-full rounded-md border px-3 py-2 text-sm"
       >
         <option value="">Alle typer</option>
         {Object.entries(DISC_TYPE_LABELS).map(([value, label]) => (
@@ -48,7 +49,7 @@ export default function SearchFilters({
       <select
         name="condition"
         defaultValue={searchParams.condition ?? ''}
-        className="rounded-md border px-3 py-2 text-sm"
+        className="w-full rounded-md border px-3 py-2 text-sm"
       >
         <option value="">Alle tilstander</option>
         {Object.entries(CONDITION_LABELS).map(([value, label]) => (
@@ -63,7 +64,7 @@ export default function SearchFilters({
         name="location"
         placeholder="Sted"
         defaultValue={searchParams.location ?? ''}
-        className="rounded-md border px-3 py-2 text-sm"
+        className="w-full rounded-md border px-3 py-2 text-sm"
       />
 
       <input
@@ -71,12 +72,12 @@ export default function SearchFilters({
         name="max_price"
         placeholder="Maks pris (kr)"
         defaultValue={searchParams.max_price ?? ''}
-        className="rounded-md border px-3 py-2 text-sm"
+        className="w-full rounded-md border px-3 py-2 text-sm"
       />
 
       <button
         type="submit"
-        className="col-span-2 rounded-md bg-brand px-3 py-2 text-sm font-medium text-white hover:bg-brand-dark md:col-span-1 lg:col-span-1"
+        className="w-full rounded-md bg-brand px-3 py-2 text-sm font-medium text-white hover:bg-brand-dark"
       >
         Søk
       </button>
