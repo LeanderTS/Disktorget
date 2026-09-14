@@ -11,7 +11,15 @@ export default function Footer() {
             className="text-brand-dark underline hover:text-brand"
           >
             Kontakt
-          <Link href="/bruksvilkar" ...>-taggen med en vanlig <a>-tag som peker til PDF-filen: <a href="/Disktorget_Bruksvilkar.pdf" target="_blank" rel="noopener noreferrer" className="text-brand-dark underline hover:text-brand" > Bruksvilkår </a>
+          </a>
+          
+            href="/Disktorget_Bruksvilkar.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-brand-dark underline hover:text-brand"
+          >
+            Bruksvilkår
+          </a>
         </p>
       </div>
     </footer>
