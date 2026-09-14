@@ -31,7 +31,7 @@ export default function SignupPage() {
     setLoading(true)
 
     const { data: existing } = await supabase
-      .from('profiles')
+      .from('public_profiles')
       .select('id')
       .ilike('username', trimmedUsername)
       .maybeSingle()

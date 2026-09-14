@@ -43,7 +43,7 @@ export default function UsernameForm({
     setLoading(true)
 
     const { data: existing } = await supabase
-      .from('profiles')
+      .from('public_profiles')
       .select('id')
       .ilike('username', trimmed)
       .neq('id', userId)

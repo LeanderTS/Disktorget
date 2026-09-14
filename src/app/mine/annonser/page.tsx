@@ -49,7 +49,7 @@ export default async function AnnoncerPage() {
 
   if (bidderIds.length > 0) {
     const { data: bidderProfiles } = await supabase
-      .from('profiles')
+      .from('public_profiles')
       .select('id, username')
       .in('id', bidderIds)
 

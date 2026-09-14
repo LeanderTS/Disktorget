@@ -26,10 +26,8 @@ export async function notifyBidAccepted(bidId: string) {
   let contactLine = ''
   if (listing?.user_id) {
     const { data: seller } = await supabase
-      .from('profiles')
-      .select('contact_email, contact_phone')
-      .eq('id', listing.user_id)
-      .single()
+      .rpc('get_private_contact', { seller_id: listing.user_id })
+      .single<{ contact_email: string | null; contact_phone: string | null }>()
 
     const parts: string[] = []
     if (seller?.contact_email) parts.push(seller.contact_email)

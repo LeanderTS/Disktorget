@@ -18,10 +18,8 @@ export async function notifyBid(
   if (!listing) return
 
   const { data: seller } = await supabase
-    .from('profiles')
-    .select('contact_email')
-    .eq('id', listing.user_id)
-    .single()
+    .rpc('get_private_contact', { seller_id: listing.user_id })
+    .single<{ contact_email: string | null; contact_phone: string | null }>()
 
   if (!seller?.contact_email) return
 

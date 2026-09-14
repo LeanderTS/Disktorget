@@ -8,7 +8,6 @@ import {
   CONDITION_LABELS,
   LISTING_TYPE_LABELS,
   type Listing,
-  type Profile,
 } from '@/lib/types'
 
 export default async function DiscDetailPage({ params }: { params: { id: string } }) {
@@ -22,11 +21,21 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
   if (!listing) notFound()
 
-  const { data: seller } = await supabase
-    .from('profiles')
-    .select('*')
+  const { data: sellerPublic } = await supabase
+    .from('public_profiles')
+    .select('id, username')
     .eq('id', listing.user_id)
-    .single<Profile>()
+    .single()
+
+  const { data: sellerContact } = await supabase
+    .rpc('get_public_contact', { seller_id: listing.user_id })
+    .single<{ contact_email: string | null; contact_phone: string | null }>()
+
+  const seller = {
+    username: sellerPublic?.username ?? null,
+    contact_email: sellerContact?.contact_email ?? null,
+    contact_phone: sellerContact?.contact_phone ?? null,
+  }
 
   const { data: bidRows } = await supabase
     .from('bids')
@@ -41,7 +50,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
 
   if (bidderIds.length > 0) {
     const { data: bidderProfiles } = await supabase
-      .from('profiles')
+      .from('public_profiles')
       .select('id, username')
       .in('id', bidderIds)
 
@@ -50,7 +59,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
     )
   }
 
-  const canShowPhone = Boolean(seller?.show_phone && seller?.contact_phone)
+  const canShowPhone = Boolean(seller?.contact_phone)
   const isCollection = listing.listing_kind === 'samling'
 
   return (
@@ -189,10 +198,10 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
             )}
 
             {canShowPhone && (
-              <a href={`tel:${seller!.contact_phone!.replace(/\s/g, '')}`}
+              <a href={`tel:${seller.contact_phone.replace(/\s/g, '')}`}
                 className="inline-block rounded-md border border-brand px-3 py-1.5 text-sm font-medium text-brand-dark hover:bg-brand-light"
               >
-                Ring {seller!.contact_phone}
+                Ring {seller.contact_phone}
               </a>
             )}
           </div>
