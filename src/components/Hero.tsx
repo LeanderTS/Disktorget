@@ -24,8 +24,8 @@ export default function Hero() {
               </span>
             </h1>
             <p className="mt-4 max-w-md text-slate-200">
-              Disktorget er markedsplassen for diskgolfspillere i Norge. Søk blant disker
-              og samlinger andre har lagt ut, eller legg ut dine egne på under et minutt.
+              Disktorget er et bruktmarked for diskgolfspillere i Norge. Søk blant disker
+              og samlinger andre har lagt ut, eller legg ut dine egne på under et minutt. By. kjøp og avtal selv med selger.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
