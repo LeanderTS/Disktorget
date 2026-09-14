@@ -12,7 +12,6 @@ export default function Footer() {
           >
             Kontakt
           </a>
-          
             href="/Disktorget_Bruksvilkar.pdf"
             target="_blank"
             rel="noopener noreferrer"
