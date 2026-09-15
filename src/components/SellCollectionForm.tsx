@@ -45,6 +45,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
   const [allowBids, setAllowBids] = useState(false)
+  const [auctionEndAt, setAuctionEndAt] = useState('')
   const [images, setImages] = useState<FileList | null>(null)
 
   const [submitting, setSubmitting] = useState(false)
@@ -107,6 +108,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         items,
         listing_type: listingType,
         allow_bids: allowBids,
+        auction_end_at: allowBids && auctionEndAt ? new Date(auctionEndAt).toISOString() : null,
         price_nok: price ? Number(price) : null,
         description: description || null,
         location: location || null,
@@ -277,6 +279,20 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         />
         Tillat bud
       </label>
+
+      {allowBids && (
+        <div>
+          <label className="mb-1 block text-sm font-medium">
+            Auksjon slutt <span className="font-normal text-gray-400">(valgfritt)</span>
+          </label>
+          <input
+            type="datetime-local"
+            value={auctionEndAt}
+            onChange={(e) => setAuctionEndAt(e.target.value)}
+            className="w-full rounded-md border px-3 py-2 text-sm"
+          />
+        </div>
+      )}
 
       <div>
         <label className="mb-1 block text-sm font-medium">Bilder av samlingen</label>
