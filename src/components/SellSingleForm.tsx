@@ -224,7 +224,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
               onChange={(e) => setIsHbo(e.target.checked)}
               className="h-4 w-4"
             />
-            HBO (Høyeste bud overtar)
+            HBO
           </label>
         </div>
       </div>
