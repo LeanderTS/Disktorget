@@ -322,7 +322,7 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
           onChange={(e) => setAllowBids(e.target.checked)}
           className="h-4 w-4"
         />
-        Tillat at andre kan legge inn bud på denne annonsen
+        Tillat bud på denne annonsen
       </label>
 
       {allowBids && (
