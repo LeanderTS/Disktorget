@@ -65,8 +65,15 @@ export default function DiscCard({ listing }: { listing: Listing }) {
           </span>
         </div>
 
-        <div className="mt-auto pt-2 font-semibold text-brand-dark">
-          {listing.price_nok ? `${listing.price_nok} kr` : 'Pris på forespørsel'}
+        <div className="mt-auto flex items-center gap-1.5 pt-2">
+          <span className="font-semibold text-brand-dark">
+            {listing.price_nok ? `${listing.price_nok} kr` : 'Pris på forespørsel'}
+          </span>
+          {listing.is_hbo && (
+            <span className="rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">
+              HBO
+            </span>
+          )}
         </div>
       </div>
     </Link>
