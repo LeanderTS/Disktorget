@@ -357,7 +357,7 @@ export default function EditCollectionForm({
           onChange={(e) => setAllowBids(e.target.checked)}
           className="h-4 w-4"
         />
-        Tillat at andre kan legge inn bud på denne samlingen
+        Tillat bud på denne samlingen
       </label>
 
       {allowBids && (
