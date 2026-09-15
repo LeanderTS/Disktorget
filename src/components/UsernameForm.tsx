@@ -73,6 +73,12 @@ export default function UsernameForm({
 
   return (
     <form onSubmit={handleSubmit} className="flex max-w-sm flex-col gap-2">
+      {currentUsername && (
+        <p className="text-sm text-gray-600">
+          Nåværende brukernavn: <span className="font-bold text-gray-900">{currentUsername}</span>
+        </p>
+      )}
+
       <div>
         <label className="mb-1 block text-sm font-medium">Brukernavn</label>
         <input
