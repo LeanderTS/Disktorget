@@ -38,6 +38,9 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
   const [removedImages, setRemovedImages] = useState<Set<string>>(new Set())
   const [diskRate, setDiskRate] = useState(listing.disk_rate ?? '')
   const [allowBids, setAllowBids] = useState(listing.allow_bids)
+  const [auctionEndAt, setAuctionEndAt] = useState(
+    listing.auction_end_at ? listing.auction_end_at.slice(0, 16) : ''
+  )
   const [newImages, setNewImages] = useState<FileList | null>(null)
 
   const [submitting, setSubmitting] = useState(false)
@@ -92,6 +95,7 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
           disk_rate: diskRate || null,
           listing_type: listingType,
           allow_bids: allowBids,
+          auction_end_at: allowBids && auctionEndAt ? new Date(auctionEndAt).toISOString() : null,
           status,
           weight_grams: weight ? Number(weight) : null,
           price_nok: price ? Number(price) : null,
@@ -320,6 +324,20 @@ export default function EditSingleForm({ listing, userId }: { listing: Listing; 
         />
         Tillat at andre kan legge inn bud på denne annonsen
       </label>
+
+      {allowBids && (
+        <div>
+          <label className="mb-1 block text-sm font-medium">
+            Auksjon slutt <span className="font-normal text-gray-400">(valgfritt)</span>
+          </label>
+          <input
+            type="datetime-local"
+            value={auctionEndAt}
+            onChange={(e) => setAuctionEndAt(e.target.value)}
+            className="w-full rounded-md border px-3 py-2 text-sm"
+          />
+        </div>
+      )}
 
       <div>
         <label className="mb-1 block text-sm font-medium">Legg til flere bilder</label>
