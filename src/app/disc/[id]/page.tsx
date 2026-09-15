@@ -60,6 +60,9 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
   }
 
   const canShowPhone = Boolean(seller?.contact_phone)
+  const auctionEnded = Boolean(
+    listing.auction_end_at && new Date(listing.auction_end_at) < new Date()
+  )
   const isCollection = listing.listing_kind === 'samling'
 
   return (
@@ -83,8 +86,24 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
           </div>
         )}
 
+        {listing.allow_bids && listing.auction_end_at && (
+          <p className="mt-4 text-sm font-medium text-gray-700">
+            {auctionEnded ? 'Auksjonen er avsluttet' : 'Auksjon slutter'}:{' '}
+            {new Date(listing.auction_end_at).toLocaleString('no-NO', {
+              dateStyle: 'medium',
+              timeStyle: 'short',
+            })}
+          </p>
+        )}
+
         {listing.allow_bids ? (
-          <BidForm listing={listing} />
+          auctionEnded ? (
+            <div className="mt-4 rounded-lg border bg-gray-50 p-4 text-sm text-gray-500">
+              Auksjonen er avsluttet og det er ikke lenger mulig å legge inn bud.
+            </div>
+          ) : (
+            <BidForm listing={listing} />
+          )
         ) : (
           <BuyButton listing={listing} />
         )}
