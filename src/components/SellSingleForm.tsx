@@ -30,6 +30,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
   const [description, setDescription] = useState('')
   const [location, setLocation] = useState('')
   const [diskRate, setDiskRate] = useState('')
+  const [isHbo, setIsHbo] = useState(false)
   const [allowBids, setAllowBids] = useState(false)
   const [auctionEndAt, setAuctionEndAt] = useState('')
   const [images, setImages] = useState<FileList | null>(null)
@@ -70,6 +71,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
         disc_type: discType,
         condition,
         disk_rate: diskRate || null,
+        is_hbo: isHbo,
         listing_type: listingType,
         allow_bids: allowBids,
         auction_end_at: allowBids && auctionEndAt ? new Date(auctionEndAt).toISOString() : null,
@@ -215,6 +217,15 @@ export default function SellSingleForm({ userId }: { userId: string }) {
             placeholder="La stå tom for 'pris på forespørsel'"
             className="w-full rounded-md border px-3 py-2 text-sm"
           />
+          <label className="mt-2 flex items-center gap-2 text-sm text-gray-700">
+            <input
+              type="checkbox"
+              checked={isHbo}
+              onChange={(e) => setIsHbo(e.target.checked)}
+              className="h-4 w-4"
+            />
+            HBO (Høyeste bud overtar)
+          </label>
         </div>
       </div>
 
