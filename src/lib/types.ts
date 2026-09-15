@@ -29,6 +29,7 @@ export interface Listing {
   fade: number | null
   weight_grams: number | null
   price_nok: number | null
+  is_hbo: boolean
   listing_type: ListingType
   status: ListingStatus
   listing_kind: ListingKind
