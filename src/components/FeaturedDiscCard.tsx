@@ -30,11 +30,17 @@ export default function FeaturedDiscCard({ listing }: { listing: Listing }) {
         <p className="mt-0.5 text-xs text-white/80">
           {isCollection ? `Samling · ${listing.items?.length ?? 0} disker` : listing.brand}
         </p>
-        <p className="mt-1 text-sm font-bold text-white">
-          {listing.price_nok ? `${listing.price_nok} kr` : 'Pris på forespørsel'}
-        </p>
+        <div className="mt-1 flex items-center gap-1.5">
+          <p className="text-sm font-bold text-white">
+            {listing.price_nok ? `${listing.price_nok} kr` : 'Pris på forespørsel'}
+          </p>
+          {listing.is_hbo && (
+            <span className="rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">
+              HBO
+            </span>
+          )}
+        </div>
       </div>
     </Link>
   )
 }
-
