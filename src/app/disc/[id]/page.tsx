@@ -87,48 +87,14 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
         )}
 
         {listing.allow_bids && listing.auction_end_at && (
-          <div
-            className={`mt-4 flex items-center gap-3 rounded-lg border-2 p-3 ${
-              auctionEnded
-                ? 'border-gray-200 bg-gray-50'
-                : 'border-amber-400 bg-amber-50'
-            }`}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              className={`h-6 w-6 flex-shrink-0 ${
-                auctionEnded ? 'text-gray-400' : 'text-amber-600'
-              }`}
-            >
-              <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-13a.75.75 0 00-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 000-1.5h-3.25V5z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <div>
-              <p
-                className={`text-xs font-semibold uppercase tracking-wide ${
-                  auctionEnded ? 'text-gray-500' : 'text-amber-700'
-                }`}
-              >
-                {auctionEnded ? 'Auksjonen er avsluttet' : 'Auksjon slutter'}
-              </p>
-              <p
-                className={`text-lg font-bold ${
-                  auctionEnded ? 'text-gray-600' : 'text-amber-800'
-                }`}
-              >
-                {new Date(listing.auction_end_at).toLocaleString('no-NO', {
-                  dateStyle: 'medium',
-                  timeStyle: 'short',
-                  timeZone: 'Europe/Oslo',
-                })}
-              </p>
-            </div>
-          </div>
+          <p className="mt-4 text-sm font-medium text-gray-700">
+            {auctionEnded ? 'Auksjonen er avsluttet' : 'Auksjon slutter'}:{' '}
+            {new Date(listing.auction_end_at).toLocaleString('no-NO', {
+              dateStyle: 'medium',
+              timeStyle: 'short',
+              timeZone: 'Europe/Oslo',
+            })}
+          </p>
         )}
 
         {listing.allow_bids ? (
@@ -166,8 +132,15 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
           </p>
         )}
 
-        <div className="mt-3 text-2xl font-semibold text-brand-dark">
-          {listing.price_nok ? `${listing.price_nok} kr` : 'Pris på forespørsel'}
+        <div className="mt-3 flex items-center gap-2">
+          <span className="text-2xl font-semibold text-brand-dark">
+            {listing.price_nok ? `${listing.price_nok} kr` : 'Pris på forespørsel'}
+          </span>
+          {listing.is_hbo && (
+            <span className="rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white shadow-sm">
+              HBO
+            </span>
+          )}
         </div>
 
         {isCollection ? (
