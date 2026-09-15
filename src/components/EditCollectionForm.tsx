@@ -69,6 +69,7 @@ export default function EditCollectionForm({
 
   const [existingImages, setExistingImages] = useState<string[]>(listing.image_urls ?? [])
   const [removedImages, setRemovedImages] = useState<Set<string>>(new Set())
+  const [isHbo, setIsHbo] = useState(listing.is_hbo)
   const [allowBids, setAllowBids] = useState(listing.allow_bids)
   const [auctionEndAt, setAuctionEndAt] = useState(
     listing.auction_end_at ? listing.auction_end_at.slice(0, 16) : ''
@@ -147,6 +148,7 @@ export default function EditCollectionForm({
           title,
           items,
           listing_type: listingType,
+          is_hbo: isHbo,
           allow_bids: allowBids,
           auction_end_at: allowBids && auctionEndAt ? new Date(auctionEndAt).toISOString() : null,
           status,
@@ -302,6 +304,15 @@ export default function EditCollectionForm({
           onChange={(e) => setPrice(e.target.value)}
           className="w-full rounded-md border px-3 py-2 text-sm"
         />
+        <label className="mt-2 flex items-center gap-2 text-sm text-gray-700">
+          <input
+            type="checkbox"
+            checked={isHbo}
+            onChange={(e) => setIsHbo(e.target.checked)}
+            className="h-4 w-4"
+          />
+          HBO (Høyeste bud overtar)
+        </label>
       </div>
 
       <div>
