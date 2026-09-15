@@ -92,6 +92,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
             {new Date(listing.auction_end_at).toLocaleString('no-NO', {
               dateStyle: 'medium',
               timeStyle: 'short',
+              timeZone: 'Europe/Oslo',
             })}
           </p>
         )}
