@@ -54,7 +54,7 @@ export default function DiscCard({ listing }: { listing: Listing }) {
           </p>
         )}
 
-        <div className="mt-1 flex flex-wrap gap-1">
+        <div className="mt-1 flex flex-wrap items-center gap-1">
           {isCollection ? (
             <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs text-brand-dark">
               Samling
@@ -63,6 +63,14 @@ export default function DiscCard({ listing }: { listing: Listing }) {
           <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
             {LISTING_TYPE_LABELS[listing.listing_type]}
           </span>
+          {!isCollection && listing.disk_rate && (
+            <span className="flex items-center gap-0.5 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-semibold text-emerald-700">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-3 w-3">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.958a1 1 0 00.95.69h4.162c.969 0 1.371 1.24.588 1.81l-3.368 2.447a1 1 0 00-.363 1.118l1.287 3.957c.3.922-.755 1.688-1.539 1.118l-3.367-2.446a1 1 0 00-1.176 0l-3.367 2.446c-.784.57-1.838-.196-1.539-1.118l1.287-3.957a1 1 0 00-.363-1.118L2.062 9.385c-.783-.57-.38-1.81.588-1.81h4.162a1 1 0 00.95-.69l1.287-3.958z" />
+              </svg>
+              {listing.disk_rate}
+            </span>
+          )}
         </div>
 
         <div className="mt-auto flex items-center gap-1.5 pt-2">
