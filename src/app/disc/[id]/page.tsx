@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import ImageGallery from '@/components/ImageGallery'
 import BidForm from '@/components/BidForm'
 import BuyButton from '@/components/BuyButton'
 import BidHistory from '@/components/BidHistory'
@@ -68,23 +69,7 @@ export default async function DiscDetailPage({ params }: { params: { id: string 
   return (
     <div className="grid gap-6 md:grid-cols-2">
       <div>
-        {listing.image_urls?.length ? (
-          <div className="grid grid-cols-2 gap-2">
-            {listing.image_urls.map((url) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={url}
-                src={url}
-                alt={listing.title}
-                className="aspect-square w-full rounded-lg object-cover"
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="flex aspect-square w-full items-center justify-center rounded-lg bg-gray-100 text-gray-400">
-            Ingen bilder
-          </div>
-        )}
+        <ImageGallery images={listing.image_urls ?? []} alt={listing.title} />
 
         {listing.allow_bids && listing.auction_end_at && (
           <div
