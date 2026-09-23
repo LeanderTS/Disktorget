@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabaseAdmin'
 
@@ -76,12 +75,7 @@ export default async function AdminStatistikkPage() {
     .reduce((sum, [, set]) => sum + set.size, 0)
 
   return (
-    <div className="mx-auto max-w-4xl">
-      <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Statistikk (admin)</h1>
-        <Link href="/admin/images" className="text-sm text-brand hover:underline">
-          Til bildekomprimering →
-        </Link>
+      <h1 className="mb-6 text-2xl font-bold">Statistikk (admin)</h1>
       </div>
 
       <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
