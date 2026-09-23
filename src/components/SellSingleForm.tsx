@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { compressImage } from '@/lib/compressImage'
 import {
   DISC_TYPE_LABELS,
   CONDITION_LABELS,
@@ -47,10 +48,11 @@ export default function SellSingleForm({ userId }: { userId: string }) {
       const imageUrls: string[] = []
       if (images) {
         for (const file of Array.from(images)) {
-          const path = `${userId}/${Date.now()}-${file.name}`
+          const compressed = await compressImage(file)
+          const path = `${userId}/${Date.now()}-${compressed.name}`
           const { error: uploadError } = await supabase.storage
             .from('disc-images')
-            .upload(path, file)
+            .upload(path, compressed)
           if (uploadError) throw uploadError
 
           const { data: publicUrl } = supabase.storage
