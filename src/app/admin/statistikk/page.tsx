@@ -75,6 +75,7 @@ export default async function AdminStatistikkPage() {
     .reduce((sum, [, set]) => sum + set.size, 0)
 
   return (
+    <div className="mx-auto max-w-4xl">
       <h1 className="mb-6 text-2xl font-bold">Statistikk (admin)</h1>
 
       <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
