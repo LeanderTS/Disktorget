@@ -126,7 +126,7 @@ export default function EditCollectionForm({
           const path = `${userId}/${Date.now()}-${compressed.name}`
           const { error: uploadError } = await supabase.storage
             .from('disc-images')
-            .upload(path, compressed)
+            .upload(path, compressed, { cacheControl: '31536000', upsert: false })
           if (uploadError) throw uploadError
 
           const { data: publicUrl } = supabase.storage
