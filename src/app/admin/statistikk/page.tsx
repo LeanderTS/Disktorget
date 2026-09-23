@@ -76,7 +76,6 @@ export default async function AdminStatistikkPage() {
 
   return (
       <h1 className="mb-6 text-2xl font-bold">Statistikk (admin)</h1>
-      </div>
 
       <div className="mb-10 grid grid-cols-2 gap-4 sm:grid-cols-4">
         <StatCard label="Brukere totalt" value={totalUsers ?? 0} />
