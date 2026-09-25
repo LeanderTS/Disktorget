@@ -9,21 +9,34 @@ export default function DiscCard({ listing }: { listing: Listing }) {
   return (
     <Link
       href={`/disc/${listing.id}`}
-      className="flex flex-col overflow-hidden rounded-lg border bg-white shadow-sm transition hover:shadow-md"
+      className="group flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-200/70 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg hover:ring-brand/30"
     >
-      <div className="aspect-square w-full bg-gray-100">
+      <div className="relative aspect-square w-full overflow-hidden bg-gray-100">
         {image ? (
           // eslint-disable-next-line @next/next/no-img-element
-          <img src={image} alt={listing.title} className="h-full w-full object-cover" />
+          <img
+            src={image}
+            alt={listing.title}
+            loading="lazy"
+            className="h-full w-full object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+          />
         ) : (
           <div className="flex h-full w-full items-center justify-center text-sm text-gray-400">
             Ingen bilde
           </div>
         )}
+
+        {listing.is_hbo && (
+          <span className="absolute right-2 top-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-white shadow-sm">
+            HBO
+          </span>
+        )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-1 p-3">
-        <h3 className="font-medium text-gray-900">{listing.title}</h3>
+      <div className="flex flex-1 flex-col gap-1.5 p-4">
+        <h3 className="line-clamp-1 font-semibold text-gray-900 transition-colors group-hover:text-brand-dark">
+          {listing.title}
+        </h3>
 
         {isCollection ? (
           <p className="text-sm text-gray-500">
@@ -54,13 +67,13 @@ export default function DiscCard({ listing }: { listing: Listing }) {
           </p>
         )}
 
-        <div className="mt-1 flex flex-wrap items-center gap-1">
+        <div className="mt-0.5 flex flex-wrap items-center gap-1">
           {isCollection ? (
-            <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs text-brand-dark">
+            <span className="rounded-full bg-brand-light px-2 py-0.5 text-xs font-medium text-brand-dark">
               Samling
             </span>
           ) : null}
-          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+          <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-600">
             {LISTING_TYPE_LABELS[listing.listing_type]}
           </span>
           {!isCollection && listing.disk_rate && (
@@ -73,15 +86,10 @@ export default function DiscCard({ listing }: { listing: Listing }) {
           )}
         </div>
 
-        <div className="mt-auto flex items-center gap-1.5 pt-2">
-          <span className="font-semibold text-brand-dark">
+        <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-2.5">
+          <span className="text-lg font-bold text-gray-900">
             {listing.price_nok ? `${listing.price_nok} kr` : 'Pris på forespørsel'}
           </span>
-          {listing.is_hbo && (
-            <span className="rounded-full bg-gradient-to-r from-amber-500 to-orange-500 px-1.5 py-0.5 text-[10px] font-bold uppercase text-white">
-              HBO
-            </span>
-          )}
         </div>
       </div>
     </Link>
