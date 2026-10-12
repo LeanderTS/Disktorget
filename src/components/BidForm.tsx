@@ -46,6 +46,13 @@ export default function BidForm({ listing }: { listing: Listing }) {
       return
     }
 
+    const minBid =
+      listing.is_hbo && !isCollection && listing.price_nok ? listing.price_nok : null
+    if (minBid !== null && numericAmount < minBid) {
+      setError(`Budet kan ikke være lavere enn HBO-prisen på ${minBid} kr.`)
+      return
+    }
+
     setSubmitting(true)
 
     const { error: insertError } = await supabase.from('bids').insert({
@@ -58,8 +65,12 @@ export default function BidForm({ listing }: { listing: Listing }) {
 
     setSubmitting(false)
 
-    if (insertError) {
-      setError('Kunne ikke sende budet. Prøv igjen.')
+       if (insertError) {
+      setError(
+        insertError.message.includes('HBO-prisen')
+          ? insertError.message
+          : 'Kunne ikke sende budet. Prøv igjen.'
+      )
       return
     }
 
