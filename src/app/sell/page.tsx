@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import SellSingleForm from '@/components/SellSingleForm'
 import SellCollectionForm from '@/components/SellCollectionForm'
@@ -73,7 +74,15 @@ export default function SellPage() {
       <h1 className="mb-4 text-2xl font-bold">
         {mode === 'enkelt' ? 'Selg enkel disk' : 'Selg samling'}
       </h1>
-
+      <div className="mb-4 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+        <span className="font-semibold">Viktig:</span> Legg inn e-postadressen din under{' '}
+        <Link href="/mine/info" className="font-medium underline">
+          Min side → Min info
+        </Link>{' '}
+        for å få e-postvarsel når noen legger inn bud eller vil kjøpe. Uten e-post får du
+        ingen varsler.
+      </div>
+      
       {mode === 'enkelt' ? (
         <SellSingleForm userId={userId} />
       ) : (
