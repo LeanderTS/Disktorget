@@ -41,12 +41,20 @@ export default function BidHistory({ bids }: { bids: BidRow[] }) {
     const numericAmount = Number(editValue)
     if (!editValue || numericAmount <= 0) return
 
-    setBusy(true)
-    await supabase.from('bids').update({ amount_nok: numericAmount }).eq('id', id)
+  const { error: updateError } = await supabase
+      .from('bids')
+      .update({ amount_nok: numericAmount })
+      .eq('id', id)
     setBusy(false)
+    if (updateError) {
+      alert(
+        updateError.message.includes('HBO-prisen')
+          ? updateError.message
+          : 'Kunne ikke endre budet.'
+      )
+      return
+    }
     setEditingId(null)
-    router.refresh()
-  }
 
   async function deleteBid(id: string) {
     setBusy(true)
