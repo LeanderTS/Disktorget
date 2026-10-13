@@ -1,5 +1,6 @@
 'use client'
 
+import { notifySavedSearches } from '@/app/actions/notifySavedSearches'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -95,7 +96,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         }
       }
 
-      const items: CollectionItem[] = filledRows.map((row) => ({
+        const { data: inserted, error: insertError } = await supabase.from('listings').insert({
         brand: row.brand,
         mold: row.mold || null,
         disc_type: row.discType,
@@ -117,9 +118,13 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         description: description || null,
         location: location || null,
         image_urls: imageUrls,
-      })
+      }).select('id').single()
 
       if (insertError) throw insertError
+
+      if (inserted?.id) {
+        await notifySavedSearches(inserted.id).catch(() => {})
+      }
 
       router.push('/mine')
       router.refresh()
