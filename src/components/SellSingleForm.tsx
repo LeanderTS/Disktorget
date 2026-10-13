@@ -1,5 +1,6 @@
 'use client'
 
+import { notifySavedSearches } from '@/app/actions/notifySavedSearches'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
@@ -62,7 +63,7 @@ export default function SellSingleForm({ userId }: { userId: string }) {
         }
       }
 
-      const { error: insertError } = await supabase.from('listings').insert({
+        const { data: inserted, error: insertError } = await supabase.from('listings').insert({
         user_id: userId,
         listing_kind: 'enkelt',
         title,
@@ -82,9 +83,13 @@ export default function SellSingleForm({ userId }: { userId: string }) {
         description: description || null,
         location: location || null,
         image_urls: imageUrls,
-      })
+      }).select('id').single()
 
       if (insertError) throw insertError
+
+      if (inserted?.id) {
+        await notifySavedSearches(inserted.id).catch(() => {})
+      }
 
       router.push('/mine')
       router.refresh()
