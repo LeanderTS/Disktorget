@@ -45,6 +45,16 @@ export default async function MinSidePage() {
             Se og administrer budene du har lagt inn på andres annonser.
           </p>
         </Link>
+
+        <Link
+          href="/mine/sok"
+          className="rounded-lg border bg-white p-5 shadow-sm transition hover:border-brand hover:shadow-md"
+        >
+          <div className="text-lg font-semibold text-brand-dark">Lagrede søk</div>
+          <p className="mt-1 text-sm text-gray-600">
+            Se og slett søkene du får e-postvarsel på.
+          </p>
+        </Link>
       </div>
     </div>
   )
