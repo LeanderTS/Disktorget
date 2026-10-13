@@ -96,7 +96,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         }
       }
 
-        const { data: inserted, error: insertError } = await supabase.from('listings').insert({
+      const items: CollectionItem[] = filledRows.map((row) => ({
         brand: row.brand,
         mold: row.mold || null,
         disc_type: row.discType,
@@ -104,7 +104,7 @@ export default function SellCollectionForm({ userId }: { userId: string }) {
         disk_rate: row.diskRate || null,
       }))
 
-      const { error: insertError } = await supabase.from('listings').insert({
+      const { data: inserted, error: insertError } = await supabase.from('listings').insert({
         user_id: userId,
         listing_kind: 'samling',
         title,
