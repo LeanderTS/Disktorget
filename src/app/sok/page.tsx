@@ -1,3 +1,4 @@
+import SaveSearchButton from '@/components/SaveSearchButton'
 import { createClient } from '@/lib/supabase/server'
 import SearchFilters from '@/components/SearchFilters'
 import DiscCard from '@/components/DiscCard'
@@ -53,6 +54,7 @@ export default async function SokPage({
       <div className="grid gap-6 md:grid-cols-[240px_1fr]">
         <aside>
           <SearchFilters searchParams={searchParams} />
+          <SaveSearchButton searchParams={searchParams} />
         </aside>
 
         <div>
